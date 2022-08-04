@@ -4,6 +4,9 @@ const express = require("express");
 const http = require("http");
 const { execute, subscribe } = require("graphql");
 const { SubscriptionServer } = require("subscriptions-transport-ws");
+const typeDefs = require("./typeDefs");
+const resolvers = require("./resolvers");
+const { ApolloServer } = require("apollo-server-express");
 
 const start = async () => {
   const app = express();
