@@ -1,6 +1,22 @@
-const { v4: uuidv4 } = require("uuid");
+import { v4 as uuidv4 } from "uuid";
 
-const state = {
+interface Player {
+  name: string
+  id: string
+}
+
+interface Game {
+  started: boolean
+  players: Player[]
+  id: string
+}
+
+interface State {
+  players: Player[]
+  games: Game[]
+}
+
+const state: State = {
   players: [
     {
       name: "Miguel",
@@ -22,7 +38,7 @@ const resolvers = {
     allGames: () => state.games,
   },
   Mutation: {
-    createPlayer: (root, args) => {
+    createPlayer: (_root: undefined, args: {name: string}) => {
       const newPlayer = {
         name: args.name,
         id: uuidv4(),
@@ -30,13 +46,16 @@ const resolvers = {
       state.players = state.players.concat(newPlayer);
       return newPlayer;
     },
-    createGame: (root, args) => {
+    createGame: (_root: undefined, args: {playerID: string}) => {
       console.log("args", args);
       const creator = state.players.find(
         (p) => p.id.toString() === args.playerID
       );
+      if (!creator) {
+        throw new Error('Could not find player')
+      }
       console.log("creator", creator);
-      const newGame = {
+      const newGame: Game = {
         started: false,
         players: [creator],
         id: uuidv4(),
@@ -47,4 +66,4 @@ const resolvers = {
   },
 };
 
-module.exports = resolvers;
+export {resolvers}

@@ -1,6 +1,6 @@
 const { gql } = require("apollo-server");
 
-module.exports = gql`
+const typeDefs = gql`
   type Player {
     name: String!
     id: ID!
@@ -25,3 +25,5 @@ module.exports = gql`
     joinGame(playerID: ID!, gameID: ID!): Game
   }
 `;
+
+export {typeDefs}
