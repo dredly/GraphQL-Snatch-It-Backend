@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+import { gql } from "apollo-server";
 
 const typeDefs = gql`
   type Player {
@@ -26,4 +26,4 @@ const typeDefs = gql`
   }
 `;
 
-export {typeDefs}
+export {typeDefs};

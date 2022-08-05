@@ -4,6 +4,6 @@ Trying to recreate the letter game [Snatch It](https://boardgamegeek.com/boardga
 
 ## Next Tasks
 
-- [ ] Configure Linting
+- [x] Configure Linting
 - [ ] Add ability to join games
 - [ ] Add ability to start games

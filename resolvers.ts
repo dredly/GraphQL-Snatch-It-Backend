@@ -52,7 +52,7 @@ const resolvers = {
         (p) => p.id.toString() === args.playerID
       );
       if (!creator) {
-        throw new Error('Could not find player')
+        throw new Error('Could not find player');
       }
       console.log("creator", creator);
       const newGame: Game = {
@@ -66,4 +66,4 @@ const resolvers = {
   },
 };
 
-export {resolvers}
+export {resolvers};

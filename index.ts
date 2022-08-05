@@ -31,8 +31,10 @@ const start = async () => {
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       {
+        // eslint-disable-next-line @typescript-eslint/require-await
         async serverWillStart() {
           return {
+            // eslint-disable-next-line @typescript-eslint/require-await
             async drainServer() {
               subscriptionServer.close();
             },
@@ -57,4 +59,4 @@ const start = async () => {
 };
 
 // call the function that does the setup and starts the server
-start();
+void start();
