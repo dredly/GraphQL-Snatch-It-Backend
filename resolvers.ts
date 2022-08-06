@@ -47,7 +47,6 @@ const resolvers = {
       return newPlayer;
     },
     createGame: (_root: undefined, args: {playerID: string}) => {
-      console.log("args", args);
       const creator = state.players.find(
         (p) => p.id.toString() === args.playerID
       );
@@ -63,6 +62,22 @@ const resolvers = {
       state.games = state.games.concat(newGame);
       return newGame;
     },
+    joinGame: (_root: undefined, args: {playerID: string, gameID: string}) => {
+      const player = state.players.find(
+        (p) => p.id.toString() === args.playerID
+      );
+      if (!player) {
+        throw new Error('Could not find player');
+      }
+      const game = state.games.find(
+        (g) => g.id.toString() === args.gameID
+      );
+      if (!game) {
+        throw new Error('Could not find player');
+      }
+      game.players = game.players.concat(player);
+      return game;
+    }
   },
 };
 
