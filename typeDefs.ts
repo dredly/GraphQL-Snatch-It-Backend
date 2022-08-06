@@ -23,6 +23,7 @@ const typeDefs = gql`
     createPlayer(name: String!): Player
     createGame(playerID: ID!): Game
     joinGame(playerID: ID!, gameID: ID!): Game
+    startGame(gameID: ID!): Game
   }
 `;
 

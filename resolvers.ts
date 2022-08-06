@@ -77,6 +77,16 @@ const resolvers = {
       }
       game.players = game.players.concat(player);
       return game;
+    },
+    startGame: (_root: undefined, args: {gameID: string}) => {
+      const game = state.games.find(
+        (g) => g.id.toString() === args.gameID
+      );
+      if (!game) {
+        throw new Error('Could not find player');
+      }
+      game.started = true;
+      return game;
     }
   },
 };
