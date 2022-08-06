@@ -25,6 +25,11 @@ const typeDefs = gql`
     joinGame(playerID: ID!, gameID: ID!): Game
     startGame(gameID: ID!): Game
   }
+
+  type Subscription {
+    gameAdded: Game!
+    playerJoined: Player!
+  } 
 `;
 
 export {typeDefs};

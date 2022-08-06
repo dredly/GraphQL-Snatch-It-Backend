@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { PubSub } from 'graphql-subscriptions';
 
 interface Player {
   name: string
@@ -30,6 +31,8 @@ const state: State = {
   games: [],
 };
 
+const pubsub = new PubSub();
+
 const resolvers = {
   Query: {
     playerCount: () => state.players.length,
@@ -60,6 +63,12 @@ const resolvers = {
         id: uuidv4(),
       };
       state.games = state.games.concat(newGame);
+
+      pubsub.publish('GAME_ADDED', {gameAdded: newGame})
+        .catch(() => {
+          throw new Error('Could not add game');
+        });
+
       return newGame;
     },
     joinGame: (_root: undefined, args: {playerID: string, gameID: string}) => {
@@ -89,6 +98,11 @@ const resolvers = {
       return game;
     }
   },
+  Subscription: {
+    gameAdded: {
+      subscribe: () => pubsub.asyncIterator(['GAME_ADDED'])
+    }
+  }
 };
 
 export {resolvers};
