@@ -7,3 +7,5 @@ Trying to recreate the letter game [Snatch It](https://boardgamegeek.com/boardga
 - [x] Configure Linting
 - [x] Add ability to join games
 - [x] Add ability to start games
+- [x] Add ability to declare readiness for next letter flip
+- [x] Add ability to flip over letter

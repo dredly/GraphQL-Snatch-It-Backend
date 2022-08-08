@@ -1,14 +1,17 @@
 import { v4 as uuidv4 } from "uuid";
 import { PubSub } from 'graphql-subscriptions';
+import { Letter, generateLetters } from './letters';
 
 interface Player {
   name: string
+  ready: boolean
   id: string
 }
 
 interface Game {
   started: boolean
   players: Player[]
+  letters: Letter[]
   id: string
 }
 
@@ -21,10 +24,12 @@ const state: State = {
   players: [
     {
       name: "Miguel",
+      ready: false,
       id: uuidv4(),
     },
     {
       name: "Igor",
+      ready: false,
       id: uuidv4(),
     },
   ],
@@ -44,6 +49,7 @@ const resolvers = {
     createPlayer: (_root: undefined, args: {name: string}) => {
       const newPlayer = {
         name: args.name,
+        ready: false,
         id: uuidv4(),
       };
       state.players = state.players.concat(newPlayer);
@@ -60,6 +66,7 @@ const resolvers = {
       const newGame: Game = {
         started: false,
         players: [creator],
+        letters: generateLetters(),
         id: uuidv4(),
       };
       state.games = state.games.concat(newGame);
@@ -82,7 +89,7 @@ const resolvers = {
         (g) => g.id.toString() === args.gameID
       );
       if (!game) {
-        throw new Error('Could not find player');
+        throw new Error('Could not find game');
       }
       game.players = game.players.concat(player);
       return game;
@@ -92,10 +99,32 @@ const resolvers = {
         (g) => g.id.toString() === args.gameID
       );
       if (!game) {
-        throw new Error('Could not find player');
+        throw new Error('Could not find game');
       }
       game.started = true;
       return game;
+    },
+    declareReadiness: (_root: undefined, args: {playerID: string}) => {
+      const player = state.players.find(
+        (p) => p.id.toString() === args.playerID
+      );
+      if (!player) {
+        throw new Error('Could not find player');
+      }
+      player.ready = true;
+      return player;
+    },
+    flipLetter: (_root: undefined, args: {gameID: string}) => {
+      const game = state.games.find(
+        (g) => g.id.toString() === args.gameID
+      );
+      if (!game) {
+        throw new Error('Could not find game');
+      }
+      const unflipped = game.letters.filter(lett => !lett.exposed);
+      const randomLetter = unflipped[Math.floor(Math.random() * unflipped.length)];
+      game.letters = game.letters.map(lett => lett.id === randomLetter.id ? { ...lett, exposed: true} : lett);
+      return randomLetter;
     }
   },
   Subscription: {
