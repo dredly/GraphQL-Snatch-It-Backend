@@ -37,7 +37,7 @@ const typeDefs = gql`
 
   type Subscription {
     gameAdded: Game!
-    playerJoined: Player!
+    playerJoined: Game!
   } 
 `;
 

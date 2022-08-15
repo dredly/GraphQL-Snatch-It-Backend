@@ -92,6 +92,12 @@ const resolvers = {
         throw new Error('Could not find game');
       }
       game.players = game.players.concat(player);
+
+      pubsub.publish('PLAYER_JOINED', {playerJoined: game})
+        .catch(() => {
+          throw new Error('Could not join game');
+        });
+
       return game;
     },
     startGame: (_root: undefined, args: {gameID: string}) => {
@@ -130,6 +136,9 @@ const resolvers = {
   Subscription: {
     gameAdded: {
       subscribe: () => pubsub.asyncIterator(['GAME_ADDED'])
+    },
+    playerJoined: {
+      subscribe: () => pubsub.asyncIterator(['PLAYER_JOINED'])
     }
   }
 };
