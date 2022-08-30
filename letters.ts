@@ -1,16 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
-
-interface Letter {
-	id: string
-	value: string
-	exposed: boolean
-}
+import { Letter } from "./types";
 
 const allLetters = 'AAAAAAAAABBCCDDDDEEEEEEEEEEEEFF\
 	GGGHHIIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOOPPQRRRRRR\
 	SSSSTTTTTTUUUUVVWWXYZ';
 
-const generateLetters = (): Letter[] => {
+export const generateLetters = (): Letter[] => {
 	return allLetters.split('').map(char => {
 		return {
 			id: uuidv4(),
@@ -19,5 +14,3 @@ const generateLetters = (): Letter[] => {
 		};
 	});
 };
-
-export {Letter, generateLetters};

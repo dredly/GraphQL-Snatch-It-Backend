@@ -31,13 +31,15 @@ const typeDefs = gql`
     createGame(playerID: ID!): Game
     joinGame(playerID: ID!, gameID: ID!): Game
     startGame(gameID: ID!): Game
-    declareReadiness(playerID: ID!): Player
+    declareReadiness(playerID: ID!): Game
     flipLetter(gameID: ID!): Letter
   }
 
   type Subscription {
     gameAdded: Game!
     playerJoined: Game!
+    playerReady: Game!
+    gameStarted: Game!
   } 
 `;
 

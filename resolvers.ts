@@ -1,24 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { PubSub } from 'graphql-subscriptions';
-import { Letter, generateLetters } from './letters';
-
-interface Player {
-  name: string
-  ready: boolean
-  id: string
-}
-
-interface Game {
-  started: boolean
-  players: Player[]
-  letters: Letter[]
-  id: string
-}
-
-interface State {
-  players: Player[]
-  games: Game[]
-}
+import { generateLetters } from './letters';
+import { State, Game } from "./types";
 
 const state: State = {
   players: [
@@ -117,8 +100,23 @@ const resolvers = {
       if (!player) {
         throw new Error('Could not find player');
       }
-      player.ready = true;
-      return player;
+      player.ready = !player.ready;
+
+      const game = state.games
+        .find(g => g.players.map(p => p.id).includes(player.id));
+      
+      if (!game) {
+        throw new Error('Could not find game');
+      }
+
+      game.players = game.players.map(p => (
+        p.id === player.id ? player : p
+      ));
+
+      pubsub.publish('PLAYER_READY', {playerReady: game}).catch(() => {
+          throw new Error('Something went wrong');
+        });
+      return game;
     },
     flipLetter: (_root: undefined, args: {gameID: string}) => {
       const game = state.games.find(
@@ -139,6 +137,12 @@ const resolvers = {
     },
     playerJoined: {
       subscribe: () => pubsub.asyncIterator(['PLAYER_JOINED'])
+    },
+    playerReady: {
+      subscribe: () => pubsub.asyncIterator(['PLAYER_READY'])
+    },
+    gameStarted: {
+      subscribe: () => pubsub.asyncIterator(['GAME_STARTED'])
     }
   }
 };
