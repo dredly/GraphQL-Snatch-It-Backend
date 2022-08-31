@@ -91,6 +91,10 @@ const resolvers = {
         throw new Error('Could not find game');
       }
       game.started = true;
+      pubsub.publish('GAME_STARTED', {gameStarted: game})
+        .catch(() => {
+          throw new Error('Could not start game');
+        });
       return game;
     },
     declareReadiness: (_root: undefined, args: {playerID: string}) => {
