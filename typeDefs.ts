@@ -24,6 +24,7 @@ const typeDefs = gql`
     gameCount: Int!
     allPlayers: [Player!]!
     allGames: [Game!]!
+    gameById(gameID: ID!): Game
   }
 
   type Mutation {
