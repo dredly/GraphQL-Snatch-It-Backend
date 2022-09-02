@@ -12,6 +12,9 @@ const subscriptionResolvers = {
 	},
 	gameStarted: {
 		subscribe: () => pubsub.asyncIterator(['GAME_STARTED'])
+	},
+	letterFlipped: {
+		subscribe: () => pubsub.asyncIterator(['LETTER_FLIPPED'])
 	}
 };
 

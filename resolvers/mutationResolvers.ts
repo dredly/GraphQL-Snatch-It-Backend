@@ -107,7 +107,10 @@ const mutationResolvers = {
 		const unflipped = game.letters.filter(lett => !lett.exposed);
 		const randomLetter = unflipped[Math.floor(Math.random() * unflipped.length)];
 		game.letters = game.letters.map(lett => lett.id === randomLetter.id ? { ...lett, exposed: true} : lett);
-		return randomLetter;
+		pubsub.publish('LETTER_FLIPPED', {letterFlipped: game}).catch(() => {
+			throw new Error('Something went wrong');
+		});
+		return game;
 	}
 };
 
