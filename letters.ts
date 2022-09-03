@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
-import { Letter } from "./types";
+import { v4 as uuidv4 } from 'uuid';
+import { Letter } from './types';
 
 const allLetters = 'AAAAAAAAABBCCDDDDEEEEEEEEEEEEFF\
 	GGGHHIIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOOPPQRRRRRR\

@@ -2,12 +2,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { state, pubsub } from './resolvers';
 import { generateLetters } from '../letters';
 import { Game } from '../types';
+import config from '../config';
 
 const mutationResolvers = {
 	createPlayer: (_root: undefined, args: {name: string}) => {
 		const newPlayer = {
 			name: args.name,
 			ready: false,
+			words: [],
 			id: uuidv4(),
 		};
 		state.players = state.players.concat(newPlayer);
@@ -70,6 +72,13 @@ const mutationResolvers = {
 			.catch(() => {
 				throw new Error('Could not start game');
 			});
+		const timeoutId = setTimeout(() => {
+			console.log('Server automatically flipping letter');
+			if (state.timers.get(game.id)) {
+				state.timers.delete(game.id);
+			}
+		}, config.gameRules.roundTimeLimit);
+		state.timers.set(game.id, timeoutId);
 		return game;
 	},
 	declareReadiness: (_root: undefined, args: {playerID: string}) => {
@@ -107,6 +116,13 @@ const mutationResolvers = {
 		const unflipped = game.letters.filter(lett => !lett.exposed);
 		const randomLetter = unflipped[Math.floor(Math.random() * unflipped.length)];
 		game.letters = game.letters.map(lett => lett.id === randomLetter.id ? { ...lett, exposed: true} : lett);
+		//Check if there is a timeout to clear
+		if (state.timers.get(game.id)) {
+			clearInterval(state.timers.get(game.id));
+			state.timers.delete(game.id);
+			console.log('Cleared interval');
+		}
+
 		pubsub.publish('LETTER_FLIPPED', {letterFlipped: game}).catch(() => {
 			throw new Error('Something went wrong');
 		});

@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from 'apollo-server';
 
 const typeDefs = gql`
   type Player {
@@ -33,7 +33,7 @@ const typeDefs = gql`
     joinGame(playerID: ID!, gameID: ID!): Game
     startGame(gameID: ID!): Game
     declareReadiness(playerID: ID!): Game
-    flipLetter(gameID: ID!): Letter
+    flipLetter(gameID: ID!): Game
   }
 
   type Subscription {
@@ -41,6 +41,7 @@ const typeDefs = gql`
     playerJoined: Game!
     playerReady: Game!
     gameStarted: Game!
+    letterFlipped: Game!
   } 
 `;
 
