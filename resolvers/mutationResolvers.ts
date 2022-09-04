@@ -3,6 +3,7 @@ import { state, pubsub } from './resolvers';
 import { generateLetters } from '../letters';
 import { Game } from '../types';
 import config from '../config';
+import flipLetter from '../actions/flipLetter';
 
 const mutationResolvers = {
 	createPlayer: (_root: undefined, args: {name: string}) => {
@@ -74,9 +75,7 @@ const mutationResolvers = {
 			});
 		const timeoutId = setTimeout(() => {
 			console.log('Server automatically flipping letter');
-			if (state.timers.get(game.id)) {
-				state.timers.delete(game.id);
-			}
+			flipLetter(game);
 		}, config.gameRules.roundTimeLimit);
 		state.timers.set(game.id, timeoutId);
 		return game;
@@ -113,19 +112,7 @@ const mutationResolvers = {
 		if (!game) {
 			throw new Error('Could not find game');
 		}
-		const unflipped = game.letters.filter(lett => !lett.exposed);
-		const randomLetter = unflipped[Math.floor(Math.random() * unflipped.length)];
-		game.letters = game.letters.map(lett => lett.id === randomLetter.id ? { ...lett, exposed: true} : lett);
-		//Check if there is a timeout to clear
-		if (state.timers.get(game.id)) {
-			clearInterval(state.timers.get(game.id));
-			state.timers.delete(game.id);
-			console.log('Cleared interval');
-		}
-
-		pubsub.publish('LETTER_FLIPPED', {letterFlipped: game}).catch(() => {
-			throw new Error('Something went wrong');
-		});
+		flipLetter(game);
 		return game;
 	}
 };

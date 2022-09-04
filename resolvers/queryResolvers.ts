@@ -11,7 +11,6 @@ const queryResolvers = {
 		if (!foundGame) {
 			throw new Error('Could not find game');
 		}
-		console.log('foundGame', foundGame);
 		return foundGame;
 	}
 };
