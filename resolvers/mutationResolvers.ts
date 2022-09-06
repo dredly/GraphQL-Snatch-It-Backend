@@ -69,6 +69,11 @@ const mutationResolvers = {
 			throw new Error('Could not find game');
 		}
 		game.started = true;
+		// Set all players ready value back to false, as it will be reused for declaring
+		// readiness to flip letters
+		for (const player of game.players) {
+			player.ready = false;
+		}
 		pubsub.publish('GAME_STARTED', {gameStarted: game})
 			.catch(() => {
 				throw new Error('Could not start game');
@@ -99,6 +104,11 @@ const mutationResolvers = {
 		game.players = game.players.map(p => (
 			p.id === player.id ? player : p
 		));
+
+		// Check if players are all ready for a letter to be flipped
+		if (game.started && game.players.filter(p => p.ready).length === game.players.length) {
+			flipLetter(game);
+		}
   
 		pubsub.publish('PLAYER_READY', {playerReady: game}).catch(() => {
 			throw new Error('Something went wrong');

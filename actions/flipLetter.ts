@@ -23,6 +23,10 @@ const flipLetter = (game: Game) => {
 	}, config.gameRules.roundTimeLimit);
 	state.timers.set(game.id, timeoutId);
 
+	for (const player of game.players) {
+		player.ready = false;
+	}
+
 	pubsub.publish('LETTER_FLIPPED', {letterFlipped: game}).catch(() => {
 		throw new Error('Something went wrong');
 	});
