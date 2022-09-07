@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { state, pubsub } from './resolvers';
 import { generateLetters } from '../letters';
-import { Game } from '../types';
+import { Game, Word } from '../types';
 import config from '../config';
 import flipLetterAction from '../actions/flipLetter';
 
@@ -125,6 +125,29 @@ const mutationResolvers = {
 			throw new Error('Could not find game');
 		}
 		flipLetterAction(game);
+		return game;
+	},
+	writeWord: (_root: undefined, args: {playerID: string, gameID: string, letterIDS: string[]}) => {
+		const player = state.players.find(
+			(p) => p.id.toString() === args.playerID
+		);
+		if (!player) {
+			throw new Error('Could not find player');
+		}
+		const game = state.games.find(
+			(g) => g.id.toString() === args.gameID
+		);
+		if (!game) {
+			throw new Error('Could not find game');
+		}
+		const lettersInWord = game.letters.flipped.filter(lett => args.letterIDS.includes(lett.id));
+		const word: Word = {
+			id: uuidv4(),
+			letters: lettersInWord
+		};
+		console.log('word', word);
+		game.letters.flipped = game.letters.flipped.filter(lett => !args.letterIDS.includes(lett.id));
+		// For now just remove letters from game, then once thats working actually give the word to the player
 		return game;
 	}
 };

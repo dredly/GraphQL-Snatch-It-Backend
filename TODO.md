@@ -1,1 +1,3 @@
-- [ ] Change data structure of game so that there are separate arrays of flipped and unflipped letters
+- [x] Change data structure of game so that there are separate arrays of flipped and unflipped letters
+- [ ] Implement resolver for player writing a word
+- [ ] Refactor mutationResolvers file

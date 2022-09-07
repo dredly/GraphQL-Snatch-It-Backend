@@ -1,12 +1,6 @@
 import { gql } from 'apollo-server';
 
 const typeDefs = gql`
-  type Player {
-    id: ID!
-    name: String!
-    ready: Boolean!
-  }
-  
   type Letter {
     id: ID!
     value: String!
@@ -15,6 +9,18 @@ const typeDefs = gql`
   type Letters {
     unflipped: [Letter!]!
     flipped: [Letter!]!
+  }
+
+  type Word {
+    id: ID!
+    letters: [Letter!]!
+  }
+
+  type Player {
+    id: ID!
+    name: String!
+    ready: Boolean!
+    words: [Word!]!
   }
 
   type Game {
@@ -40,6 +46,7 @@ const typeDefs = gql`
     startGame(gameID: ID!): Game
     declareReadiness(playerID: ID!): Game
     flipLetter(gameID: ID!): Game
+    writeWord(playerID: ID!, gameID: ID!, letterIDS: [ID!]!): Game
   }
 
   type Subscription {
