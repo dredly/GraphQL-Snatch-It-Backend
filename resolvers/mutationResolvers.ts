@@ -4,19 +4,10 @@ import { generateLetters } from '../letters';
 import { Game, Word } from '../types';
 import config from '../config';
 import flipLetterAction from '../actions/flipLetter';
+import newPlayerAction from '../actions/createPlayer';
 
 const mutationResolvers = {
-	createPlayer: (_root: undefined, args: {name: string}) => {
-		console.log('createPlayer resolver called');
-		const newPlayer = {
-			name: args.name,
-			ready: false,
-			words: [],
-			id: uuidv4(),
-		};
-		state.players = state.players.concat(newPlayer);
-		return newPlayer;
-	},
+	createPlayer: (_root: undefined, args: {name: string}) => newPlayerAction(state, args.name),
 	createGame: (_root: undefined, args: {playerID: string}) => {
 		const creator = state.players.find(
 			(p) => p.id.toString() === args.playerID
