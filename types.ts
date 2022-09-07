@@ -1,7 +1,11 @@
 export interface Letter {
 	id: string
 	value: string
-	exposed: boolean
+}
+
+export interface Letters {
+  unflipped: Letter[]
+  flipped: Letter[]
 }
 
 export interface Word {
@@ -19,7 +23,7 @@ export interface Player {
 export interface Game {
   started: boolean
   players: Player[]
-  letters: Letter[]
+  letters: Letters
   id: string
 }
 

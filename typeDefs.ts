@@ -6,18 +6,24 @@ const typeDefs = gql`
     name: String!
     ready: Boolean!
   }
+  
+  type Letter {
+    id: ID!
+    value: String!
+  }
+
+  type Letters {
+    unflipped: [Letter!]!
+    flipped: [Letter!]!
+  }
+
   type Game {
     id: ID!
     started: Boolean!
     players: [Player!]!
-    letters: [Letter!]!
+    letters: Letters!
   }
-  type Letter {
-    id: ID!
-    value: String!
-    exposed: Boolean!
-  }
-
+  
   type Query {
     # count queries probably just for testing
     playerCount: Int!

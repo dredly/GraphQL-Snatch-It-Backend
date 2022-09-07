@@ -1,0 +1,1 @@
+- [ ] Change data structure of game so that there are separate arrays of flipped and unflipped letters

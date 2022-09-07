@@ -3,10 +3,11 @@ import { state, pubsub } from './resolvers';
 import { generateLetters } from '../letters';
 import { Game } from '../types';
 import config from '../config';
-import flipLetter from '../actions/flipLetter';
+import flipLetterAction from '../actions/flipLetter';
 
 const mutationResolvers = {
 	createPlayer: (_root: undefined, args: {name: string}) => {
+		console.log('createPlayer resolver called');
 		const newPlayer = {
 			name: args.name,
 			ready: false,
@@ -27,7 +28,7 @@ const mutationResolvers = {
 		const newGame: Game = {
 			started: false,
 			players: [creator],
-			letters: generateLetters(),
+			letters: {unflipped: generateLetters(), flipped: []},
 			id: uuidv4(),
 		};
 		state.games = state.games.concat(newGame);
@@ -62,6 +63,7 @@ const mutationResolvers = {
 		return game;
 	},
 	startGame: (_root: undefined, args: {gameID: string}) => {
+		console.log('Received request to start game');
 		const game = state.games.find(
 			(g) => g.id.toString() === args.gameID
 		);
@@ -80,7 +82,7 @@ const mutationResolvers = {
 			});
 		const timeoutId = setTimeout(() => {
 			console.log('Server automatically flipping letter');
-			flipLetter(game);
+			flipLetterAction(game);
 		}, config.gameRules.roundTimeLimit);
 		state.timers.set(game.id, timeoutId);
 		return game;
@@ -107,7 +109,7 @@ const mutationResolvers = {
 
 		// Check if players are all ready for a letter to be flipped
 		if (game.started && game.players.filter(p => p.ready).length === game.players.length) {
-			flipLetter(game);
+			flipLetterAction(game);
 		}
   
 		pubsub.publish('PLAYER_READY', {playerReady: game}).catch(() => {
@@ -122,7 +124,7 @@ const mutationResolvers = {
 		if (!game) {
 			throw new Error('Could not find game');
 		}
-		flipLetter(game);
+		flipLetterAction(game);
 		return game;
 	}
 };
