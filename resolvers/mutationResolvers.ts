@@ -104,7 +104,7 @@ const mutationResolvers = {
 		}
   
 		pubsub.publish('PLAYER_READY', {playerReady: game}).catch(() => {
-			throw new Error('Something went wrong');
+			throw new Error('Pubsub error');
 		});
 		return game;
 	},
@@ -136,9 +136,12 @@ const mutationResolvers = {
 			id: uuidv4(),
 			letters: word
 		};
+		player.words = player.words.concat(newWord);
 		console.log('word', newWord);
 		game.letters.flipped = remaining;
-		// For now just remove letters from game, then once thats working actually give the word to the player
+		pubsub.publish('WORD_WRITTEN', {wordWritten: game}).catch(() => {
+			throw new Error('Pubsub error');
+		});
 		return game;
 	}
 };

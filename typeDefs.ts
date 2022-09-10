@@ -55,6 +55,7 @@ const typeDefs = gql`
     playerReady: Game!
     gameStarted: Game!
     letterFlipped: Game!
+    wordWritten: Game!
   } 
 `;
 

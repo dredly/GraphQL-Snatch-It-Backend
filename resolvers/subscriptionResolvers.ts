@@ -1,5 +1,6 @@
 import { pubsub } from './resolvers';
 
+//TODO: refactor to general game update
 const subscriptionResolvers = {
 	gameAdded: {
 		subscribe: () => pubsub.asyncIterator(['GAME_ADDED'])
@@ -15,6 +16,9 @@ const subscriptionResolvers = {
 	},
 	letterFlipped: {
 		subscribe: () => pubsub.asyncIterator(['LETTER_FLIPPED'])
+	},
+	wordWritten: {
+		subscribe: () => pubsub.asyncIterator(['WORD_WRITTEN'])
 	}
 };
 
