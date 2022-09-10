@@ -1,4 +1,4 @@
-import { getLettersForWord } from '../letters';
+import { generateLetters, getLettersForWord } from '../letters';
 import { Letter } from '../types';
 
 const testLetterPool: Letter[] = [
@@ -31,6 +31,10 @@ const testLetterPool: Letter[] = [
 	}
 ];
 
+test('generateLetters function', () => {
+	expect(generateLetters('AAAABC')).toHaveLength(6);
+});
+
 test('getLettersForWord function', () => {
 	expect(getLettersForWord('riff', testLetterPool)).toEqual({
 		word: [
@@ -47,4 +51,8 @@ test('getLettersForWord function', () => {
 			{id: '5', value: 'E'},
 		],
 	});
+
+	// Should not actually call function when testing to see if it throws an error
+	// https://eloquentcode.com/expect-a-function-to-throw-an-exception-in-jest
+	expect(() => getLettersForWord('amedeo', testLetterPool)).toThrowError();
 });

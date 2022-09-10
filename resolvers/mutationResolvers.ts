@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { state, pubsub } from './resolvers';
-import { generateLetters } from '../letters';
+import { generateLetters, getLettersForWord, allLetters } from '../letters';
 import { Game, Word } from '../types';
 import config from '../config';
 import flipLetterAction from '../actions/flipLetter';
@@ -19,7 +19,7 @@ const mutationResolvers = {
 		const newGame: Game = {
 			started: false,
 			players: [creator],
-			letters: {unflipped: generateLetters(), flipped: []},
+			letters: {unflipped: generateLetters(allLetters), flipped: []},
 			id: uuidv4(),
 		};
 		state.games = state.games.concat(newGame);
@@ -118,7 +118,7 @@ const mutationResolvers = {
 		flipLetterAction(game);
 		return game;
 	},
-	writeWord: (_root: undefined, args: {playerID: string, gameID: string, letterIDS: string[]}) => {
+	writeWord: (_root: undefined, args: {playerID: string, gameID: string, word: string}) => {
 		const player = state.players.find(
 			(p) => p.id.toString() === args.playerID
 		);
@@ -131,13 +131,13 @@ const mutationResolvers = {
 		if (!game) {
 			throw new Error('Could not find game');
 		}
-		const lettersInWord = game.letters.flipped.filter(lett => args.letterIDS.includes(lett.id));
-		const word: Word = {
+		const { word, remaining } = getLettersForWord(args.word, game.letters.flipped);
+		const newWord: Word = {
 			id: uuidv4(),
-			letters: lettersInWord
+			letters: word
 		};
-		console.log('word', word);
-		game.letters.flipped = game.letters.flipped.filter(lett => !args.letterIDS.includes(lett.id));
+		console.log('word', newWord);
+		game.letters.flipped = remaining;
 		// For now just remove letters from game, then once thats working actually give the word to the player
 		return game;
 	}

@@ -46,7 +46,7 @@ const typeDefs = gql`
     startGame(gameID: ID!): Game
     declareReadiness(playerID: ID!): Game
     flipLetter(gameID: ID!): Game
-    writeWord(playerID: ID!, gameID: ID!, letterIDS: [ID!]!): Game
+    writeWord(playerID: ID!, gameID: ID!, word: String!): Game
   }
 
   type Subscription {
