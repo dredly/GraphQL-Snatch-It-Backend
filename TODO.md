@@ -3,4 +3,5 @@
 - [x] Refactor mutationResolvers file
 - [x] Actually finish writeWord resolver, working with frontend
 - [x] Add subscription for writeWord
-- [ ] Refactor subscriptions
+- [x] Refactor subscriptions
+- [ ] Add mutations for snatching

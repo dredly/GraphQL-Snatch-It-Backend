@@ -29,7 +29,7 @@ const flipLetterAction = (game: Game) => {
 		player.ready = false;
 	}
 
-	pubsub.publish('LETTER_FLIPPED', {letterFlipped: game}).catch(() => {
+	pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
 		throw new Error('Something went wrong');
 	});
 };

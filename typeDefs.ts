@@ -51,11 +51,8 @@ const typeDefs = gql`
 
   type Subscription {
     gameAdded: Game!
-    playerJoined: Game!
-    playerReady: Game!
+    gameUpdated: Game!
     gameStarted: Game!
-    letterFlipped: Game!
-    wordWritten: Game!
   } 
 `;
 

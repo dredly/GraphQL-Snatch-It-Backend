@@ -24,10 +24,9 @@ const mutationResolvers = {
 		};
 		state.games = state.games.concat(newGame);
   
-		pubsub.publish('GAME_ADDED', {gameAdded: newGame})
-			.catch(() => {
-				throw new Error('Could not add game');
-			});
+		pubsub.publish('GAME_ADDED', {gameAdded: newGame}).catch(() => {
+			throw new Error('Something went wrong');
+		});
   
 		return newGame;
 	},
@@ -46,10 +45,9 @@ const mutationResolvers = {
 		}
 		game.players = game.players.concat(player);
   
-		pubsub.publish('PLAYER_JOINED', {playerJoined: game})
-			.catch(() => {
-				throw new Error('Could not join game');
-			});
+		pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
+			throw new Error('Something went wrong');
+		});
   
 		return game;
 	},
@@ -67,10 +65,9 @@ const mutationResolvers = {
 		for (const player of game.players) {
 			player.ready = false;
 		}
-		pubsub.publish('GAME_STARTED', {gameStarted: game})
-			.catch(() => {
-				throw new Error('Could not start game');
-			});
+		pubsub.publish('GAME_STARTED', {gameStarted: game}).catch(() => {
+			throw new Error('Something went wrong');
+		});
 		const timeoutId = setTimeout(() => {
 			console.log('Server automatically flipping letter');
 			flipLetterAction(game);
@@ -103,8 +100,8 @@ const mutationResolvers = {
 			flipLetterAction(game);
 		}
   
-		pubsub.publish('PLAYER_READY', {playerReady: game}).catch(() => {
-			throw new Error('Pubsub error');
+		pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
+			throw new Error('Something went wrong');
 		});
 		return game;
 	},
@@ -139,8 +136,8 @@ const mutationResolvers = {
 		player.words = player.words.concat(newWord);
 		console.log('word', newWord);
 		game.letters.flipped = remaining;
-		pubsub.publish('WORD_WRITTEN', {wordWritten: game}).catch(() => {
-			throw new Error('Pubsub error');
+		pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
+			throw new Error('Something went wrong');
 		});
 		return game;
 	}
