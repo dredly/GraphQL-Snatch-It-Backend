@@ -5,3 +5,6 @@
 - [x] Add subscription for writeWord
 - [x] Refactor subscriptions
 - [ ] Add mutations for snatching
+    - [ ] Test snatchLetters function
+    - [ ] Create snatchWord reducer
+    - [ ] Sort out subscriptions and get working with frontend
