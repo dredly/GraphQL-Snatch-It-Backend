@@ -6,5 +6,6 @@
 - [x] Refactor subscriptions
 - [ ] Add mutations for snatching
     - [x] Test snatchLetters function
-    - [ ] Create snatchWord resolver
+    - [x] Create snatchWord resolver
     - [ ] Sort out subscriptions and get working with frontend
+    - [ ] Refactor mutationResolvers file

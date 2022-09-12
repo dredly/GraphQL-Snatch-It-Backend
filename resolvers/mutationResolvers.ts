@@ -1,10 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 import { state, pubsub } from './resolvers';
-import { generateLetters, getLettersForWord, allLetters } from '../letters';
+import { generateLetters, getLettersForWord, allLetters, snatchLetters } from '../letters';
 import { Game, Word } from '../types';
 import config from '../config';
 import flipLetterAction from '../actions/flipLetter';
 import newPlayerAction from '../actions/createPlayer';
+import findPlayerByWordIdAction from '../actions/findPlayerByWordId';
 
 const mutationResolvers = {
 	createPlayer: (_root: undefined, args: {name: string}) => newPlayerAction(state, args.name),
@@ -135,6 +136,39 @@ const mutationResolvers = {
 		};
 		player.words = player.words.concat(newWord);
 		console.log('word', newWord);
+		game.letters.flipped = remaining;
+		pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
+			throw new Error('Something went wrong');
+		});
+		return game;
+	},
+	snatchWord: (_root: undefined, args: {playerID: string, gameID: string, word: string, snatchFromID: string}) => {
+		const player = state.players.find(
+			(p) => p.id === args.playerID
+		);
+		if (!player) {
+			throw new Error('Could not find player');
+		}
+		const game = state.games.find(
+			(g) => g.id === args.gameID
+		);
+		if (!game) {
+			throw new Error('Could not find game');
+		}
+		const snatchFrom = player.words.find(
+			(w) => w.id === args.snatchFromID
+		);
+		if (!snatchFrom) {
+			throw new Error('Could not find word to snatch from');
+		}
+		const playerLosingWord = findPlayerByWordIdAction(game.players, args.snatchFromID);
+		playerLosingWord.words = playerLosingWord.words.filter(w => w.id !== args.snatchFromID);
+		const { word, remaining } = snatchLetters(args.word, game.letters.flipped, snatchFrom);
+		const newWord: Word = {
+			id: uuidv4(),
+			letters: word
+		};
+		player.words = player.words.concat(newWord);
 		game.letters.flipped = remaining;
 		pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
 			throw new Error('Something went wrong');
