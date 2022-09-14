@@ -2,6 +2,7 @@ import { Game } from '../types';
 import { state } from '../resolvers/resolvers';
 import config from '../config';
 import { pubsub } from '../resolvers/resolvers';
+import handleLastFlip from './handleLastFlip';
 
 const handleLetterFlip = (game: Game) => {
 	const randomLetter = game.letters.unflipped[Math.floor(Math.random() * game.letters.unflipped.length)];
@@ -27,6 +28,11 @@ const handleLetterFlip = (game: Game) => {
 
 	for (const player of game.players) {
 		player.ready = false;
+	}
+
+	// Check if the letter just flipped was the last one
+	if (!game.letters.unflipped.length) {
+		handleLastFlip(game);
 	}
 
 	pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
