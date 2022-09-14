@@ -1,5 +1,5 @@
 import { Player } from '../../types';
-import findPlayerByWordIdAction from '../../actions/findPlayerByWordId';
+import findPlayerByWordIdAction from '../../helpers/findPlayerByWordId';
 
 // Not actually concerned about letters as we are using ids,
 // so leave as blank list

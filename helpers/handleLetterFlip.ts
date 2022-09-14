@@ -3,7 +3,7 @@ import { state } from '../resolvers/resolvers';
 import config from '../config';
 import { pubsub } from '../resolvers/resolvers';
 
-const flipLetterAction = (game: Game) => {
+const handleLetterFlip = (game: Game) => {
 	const randomLetter = game.letters.unflipped[Math.floor(Math.random() * game.letters.unflipped.length)];
 	game.letters = {
 		unflipped: game.letters.unflipped.filter(ufl => ufl.id !== randomLetter.id),
@@ -18,7 +18,7 @@ const flipLetterAction = (game: Game) => {
 	// Start the timer again
 	const timeoutId = setTimeout(() => {
 		console.log('Server automatically flipping letter');
-		flipLetterAction(game);
+		handleLetterFlip(game);
 		if (state.timers.get(game.id)) {
 			state.timers.delete(game.id);
 		}
@@ -34,4 +34,4 @@ const flipLetterAction = (game: Game) => {
 	});
 };
 
-export default flipLetterAction;
+export default handleLetterFlip;
