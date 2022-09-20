@@ -12,6 +12,7 @@
     - [x] Make sure resolver searches for words from all players in the game
     - [x] Sort out subscriptions and get working with frontend
     - [x] Refactor mutationResolvers file
+- [ ] Migrate over to using gqlobby-server
 - [ ] Add end condition
 
 ## Long Term
