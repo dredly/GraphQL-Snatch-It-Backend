@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash.clonedeep';
 
-import { State, Word } from '../types';
+import { Game, State, Word } from '../types';
 import { getLettersForWord } from '../letters';
-import { pubsub } from '../resolvers/resolvers';
 
 const cd = cloneDeep;
 
@@ -24,17 +23,18 @@ const writeWordAction = (state: State, playerID: string, gameID: string, word: s
 		letters
 	};
 
-	const updatedGame = {
+	const updatedGame: Game = {
 		...cd(game),
 		players: game.players.map(p => (
 			p.id === playerID
 				? { ...p, words: p.words.concat(newWord)}
 				: p
 		)),
-		letters: { ...letters, flipped: remaining }
+		letters: { ...game.letters, flipped: remaining }
 	};
 
-	void pubsub.publish('GAME_UPDATED', {gameUpdated: updatedGame});
+	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);
+
 	return updatedGame;
 };
 

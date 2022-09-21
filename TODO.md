@@ -13,6 +13,11 @@
     - [x] Sort out subscriptions and get working with frontend
     - [x] Refactor mutationResolvers file
 - [ ] Migrate over to using gqlobby-server
+    - [x] Convert actions
+    - [ ] Write tests for edge cases of actions
+    - [ ] Make sure helpers still work
+    - [ ] Sort out resolvers
+    - [ ] Get server startable again
 - [ ] Add end condition
 
 ## Long Term

@@ -1,9 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
-import { State, Word } from '../types';
+import cloneDeep from 'lodash.clonedeep';
+
+import { State, Word, Game } from '../types';
 import findWordById from '../helpers/findWordById';
 import findPlayerByWordId from '../helpers/findPlayerByWordId';
 import { snatchLetters } from '../letters';
-import { pubsub } from '../resolvers/resolvers';
+
+const cd = cloneDeep;
 
 const snatchWordAction = (state: State, playerID: string, gameID: string, word: string, snatchFromID: string) => {
 	const game = state.games.find(
@@ -18,18 +21,28 @@ const snatchWordAction = (state: State, playerID: string, gameID: string, word: 
 	}
 	const snatchFrom = findWordById(game.players, snatchFromID);
 	const playerLosingWord = findPlayerByWordId(game.players, snatchFromID);
-	playerLosingWord.words = playerLosingWord.words.filter(w => w.id !== snatchFromID);
+	const loserRemainingWords = playerLosingWord.words.filter(w => w.id !== snatchFromID);
 	const { word: letters, remaining } = snatchLetters(word, game.letters.flipped, snatchFrom);
 	const newWord: Word = {
 		id: uuidv4(),
 		letters
 	};
-	player.words = player.words.concat(newWord);
-	game.letters.flipped = remaining;
-	pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
-		throw new Error('Something went wrong');
-	});
-	return game;
+
+	const updatedGame: Game = {
+		...cd(game),
+		players: game.players.map(p => (
+			p.id === playerID
+				? { ...p, words: p.words.concat(newWord)}
+				: p.id === playerLosingWord.id
+					? { ...p, words: loserRemainingWords }
+					: p
+		)),
+		letters: { ...game.letters, flipped: remaining }
+	};
+
+	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);
+
+	return updatedGame;
 };
 
 export default snatchWordAction;
