@@ -6,17 +6,15 @@ import { snatchLetters } from '../letters';
 import { pubsub } from '../resolvers/resolvers';
 
 const snatchWordAction = (state: State, playerID: string, gameID: string, word: string, snatchFromID: string) => {
-	const player = state.players.find(
-		(p) => p.id === playerID
-	);
-	if (!player) {
-		throw new Error('Could not find player');
-	}
 	const game = state.games.find(
 		(g) => g.id === gameID
 	);
 	if (!game) {
 		throw new Error('Could not find game');
+	}
+	const player = game.players.find(p => p.id === playerID);
+	if (!player) {
+		throw new Error('Could not find player');
 	}
 	const snatchFrom = findWordById(game.players, snatchFromID);
 	const playerLosingWord = findPlayerByWordId(game.players, snatchFromID);
