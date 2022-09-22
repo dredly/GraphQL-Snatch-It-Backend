@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash.clonedeep';
 
 import { Game, State, Word } from '../types';
-import { getLettersForWord } from '../letters';
+import getLettersForWord from '../helpers/letters/getLettersForWord';
 
 const cd = cloneDeep;
 

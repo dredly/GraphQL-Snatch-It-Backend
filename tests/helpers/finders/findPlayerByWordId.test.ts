@@ -1,5 +1,5 @@
-import { Player } from '../../types';
-import findPlayerByWordIdAction from '../../helpers/findPlayerByWordId';
+import { Player } from '../../../types';
+import findPlayerByWordId from '../../../helpers/finders/findPlayerByWordId';
 
 // Not actually concerned about letters as we are using ids,
 // so leave as blank list
@@ -44,8 +44,8 @@ const testPlayerList: Player[] = [
 	}
 ];
 
-test('findPlayerByWordIdAction function', () => {
-	expect(findPlayerByWordIdAction(testPlayerList, '4')).toEqual(testPlayerList[1]);
-	expect(findPlayerByWordIdAction(testPlayerList, '2')).toEqual(testPlayerList[0]);
-	expect(() => findPlayerByWordIdAction(testPlayerList, '7')).toThrowError();
+test('findPlayerByWordId function', () => {
+	expect(findPlayerByWordId(testPlayerList, '4')).toEqual(testPlayerList[1]);
+	expect(findPlayerByWordId(testPlayerList, '2')).toEqual(testPlayerList[0]);
+	expect(() => findPlayerByWordId(testPlayerList, '7')).toThrowError();
 });

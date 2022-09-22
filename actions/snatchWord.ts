@@ -2,9 +2,9 @@ import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash.clonedeep';
 
 import { State, Word, Game } from '../types';
-import findWordById from '../helpers/findWordById';
-import findPlayerByWordId from '../helpers/findPlayerByWordId';
-import { snatchLetters } from '../letters';
+import findWordById from '../helpers/finders/findWordById';
+import findPlayerByWordId from '../helpers/finders/findPlayerByWordId';
+import snatchLetters from '../helpers/letters/snatchLetters';
 
 const cd = cloneDeep;
 
@@ -19,7 +19,7 @@ const snatchWordAction = (state: State, playerID: string, gameID: string, word: 
 	if (!player) {
 		throw new Error('Could not find player');
 	}
-	const snatchFrom = findWordById(game.players, snatchFromID);
+	const snatchFrom: Word = findWordById(game.players, snatchFromID);
 	const playerLosingWord = findPlayerByWordId(game.players, snatchFromID);
 	const loserRemainingWords = playerLosingWord.words.filter(w => w.id !== snatchFromID);
 	const { letters, remaining } = snatchLetters(word, game.letters.flipped, snatchFrom);

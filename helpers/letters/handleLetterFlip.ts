@@ -1,30 +1,29 @@
-import { Game } from '../types';
-import { state } from '../resolvers/resolvers';
-import config from '../config';
-import { pubsub } from '../resolvers/resolvers';
+import { Game } from '../../types';
+import config from '../../config';
+import { pubsub } from '../../resolvers/resolvers';
 import handleLastFlip from './handleLastFlip';
 
-const handleLetterFlip = (game: Game) => {
+const handleLetterFlip = (game: Game, timers: Map<string, NodeJS.Timeout>) => {
 	const randomLetter = game.letters.unflipped[Math.floor(Math.random() * game.letters.unflipped.length)];
 	game.letters = {
 		unflipped: game.letters.unflipped.filter(ufl => ufl.id !== randomLetter.id),
 		flipped: game.letters.flipped.concat(randomLetter)
 	};
-	if (state.timers.get(game.id)) {
-		clearInterval(state.timers.get(game.id));
-		state.timers.delete(game.id);
+	if (timers.get(game.id)) {
+		clearInterval(timers.get(game.id));
+		timers.delete(game.id);
 		console.log('Cleared interval');
 	}
 
 	// Start the timer again
 	const timeoutId = setTimeout(() => {
 		console.log('Server automatically flipping letter');
-		handleLetterFlip(game);
-		if (state.timers.get(game.id)) {
-			state.timers.delete(game.id);
+		handleLetterFlip(game, timers);
+		if (timers.get(game.id)) {
+			timers.delete(game.id);
 		}
 	}, config.gameRules.roundTimeLimit);
-	state.timers.set(game.id, timeoutId);
+	timers.set(game.id, timeoutId);
 
 	for (const player of game.players) {
 		player.ready = false;

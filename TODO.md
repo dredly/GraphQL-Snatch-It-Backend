@@ -16,7 +16,11 @@
     - [x] Convert actions
     - [x] Write tests for edge cases of actions
     - [ ] Make sure helpers still work
+        - [ ] Write tests for letter helpers
+        - [ ] Integrate letter flipping back into actions
     - [ ] Sort out resolvers
+        - [ ] Get them working with actions
+        - [ ] Add pubsub stuff back
     - [ ] Get server startable again
 - [ ] Add end condition
 
