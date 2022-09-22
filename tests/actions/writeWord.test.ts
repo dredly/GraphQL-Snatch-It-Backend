@@ -18,4 +18,14 @@ describe('writeWordAction', () => {
 			cd(testState1).games.map(g => g.id === updatedGame.id ? updatedGame : g)
 		);
 	});
+
+	it('Throws an error when given an invalid gameID or playerID', () => {
+		expect(() => writeWordAction(cd(testState1), '4', 'falsy', 'bat')).toThrowError(
+			'Could not find game'
+		);
+
+		expect(() => writeWordAction(cd(testState1), 'falsy', '2', 'bat')).toThrowError(
+			'Could not find player'
+		);
+	});
 });

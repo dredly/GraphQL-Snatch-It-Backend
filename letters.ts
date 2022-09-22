@@ -25,7 +25,7 @@ export const getLettersForWord = (word: string, letterPool: Letter[]) => {
 		lettersForWord.push(letter);
 	}
 	return {
-		word: lettersForWord,
+		letters: lettersForWord,
 		remaining: availableLetters
 	};
 };
@@ -56,7 +56,7 @@ export const snatchLetters = (word: string, letterPool: Letter[], snatchFrom: Wo
 	}
 	
 	return {
-		word: lettersForWord,
+		letters: lettersForWord,
 		remaining: availableLetters
 	};
 };

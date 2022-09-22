@@ -17,4 +17,13 @@ describe('snatchWordAction', () => {
 			cd(testState2).games.map(g => g.id === updatedGame.id ? updatedGame : g)
 		);
 	});
+
+	it('Throws an error if called with invalid playerID or gameID', () => {
+		expect(() => snatchWordAction(cd(testState2), '2', '100', 'path', '2')).toThrowError(
+			'Could not find game'
+		);
+		expect(() => snatchWordAction(cd(testState2), '100', '1', 'path', '2')).toThrowError(
+			'Could not find player'
+		);
+	});
 });

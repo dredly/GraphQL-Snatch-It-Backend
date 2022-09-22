@@ -17,4 +17,8 @@ describe('declareReadinessAction', () => {
 			cd(testState1).games.map(g => g.id === updatedGame.id ? updatedGame : g)
 		);
 	});
+
+	it('Throws an error when called with an invalid playerID', () => {
+		expect(() => declareReadinessAction(cd(testState1), '528')).toThrowError('A game containing that player was not found');
+	});
 });

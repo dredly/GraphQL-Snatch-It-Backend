@@ -28,7 +28,7 @@ test('generateLetters function', () => {
 
 test('getLettersForWord function', () => {
 	expect(getLettersForWord('riff', testLetterPool)).toEqual({
-		word: [
+		letters: [
 			{id: '8', value: 'R'},
 			{id: '9', value: 'I'},
 			{id: '6', value: 'F'},
@@ -50,7 +50,7 @@ test('getLettersForWord function', () => {
 
 test('snatchLetters function', () => {
 	expect(snatchLetters('barter', testLetterPool, testWord)).toEqual({
-		word: [
+		letters: [
 			{id: '2', value: 'B'},
 			{id: '11', value: 'A'},
 			{id: '10', value: 'R'},

@@ -17,7 +17,7 @@ const writeWordAction = (state: State, playerID: string, gameID: string, word: s
 	if (!player) {
 		throw new Error('Could not find player');
 	}
-	const { word: letters, remaining } = getLettersForWord(word, game.letters.flipped);
+	const { letters, remaining } = getLettersForWord(word, game.letters.flipped);
 	const newWord: Word = {
 		id: uuidv4(),
 		letters
