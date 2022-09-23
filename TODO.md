@@ -23,13 +23,15 @@
         - [x] Integrate letter flipping back into actions
             - [x] Add back into declareReadiness action
             - [x] Extend tests for declareReadiness action accordingly
+    - [x] Get server startable again
     - [ ] Sort out resolvers
-        - [ ] Get them working with actions
-        - [ ] Add pubsub stuff back
-        - [ ] Add startNewGame action and resolver
-    - [ ] Get server startable again
+        - [x] Get them working with actions
+        - [ ] Add createGameInProgress action and resolver
+            - [x] Basic functionality
+            - [ ] Test basic functionality
+            - [ ] letter flipping
+            - [ ] Test letter flipping
+            - [ ] Incorporate into resolver
+        - [ ] Add pubsub stuff back   
 - [ ] Add end condition
-
-## Long Term
-
-- [ ] Use Redis cache for state?
+- [ ] Initial deployment

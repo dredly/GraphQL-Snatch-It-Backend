@@ -6,7 +6,11 @@ import { State, Game } from '../types';
 const cd = cloneDeep;
 
 // Dependency injecting the handleLetterFlip function to make testing easier
-const declareReadinessAction = (state: State, playerID: string, handleLetterFlip: (game: Game, timers: Map<string, NodeJS.Timeout>) => Game) => {
+const declareReadinessAction = (
+	state: State, 
+	playerID: string, 
+	handleLetterFlip: (game: Game, timers: Map<string, NodeJS.Timeout>) => Game
+) => {
 	const game = state.games.find(g => g.players.map(p => p.id).includes(playerID));
 	if (!game) {
 		throw new Error('A game containing that player was not found');

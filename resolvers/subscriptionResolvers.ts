@@ -1,14 +1,8 @@
 import { pubsub } from './resolvers';
 
 const subscriptionResolvers = {
-	gameAdded: {
-		subscribe: () => pubsub.asyncIterator(['GAME_ADDED'])
-	},
-	gameStarted: {
-		subscribe: () => pubsub.asyncIterator(['GAME_STARTED'])
-	},
-	gameUpdated: {
-		subscribe: () => pubsub.asyncIterator(['GAME_UPDATED'])
+	gameInProgressUpdated: {
+		subscribe: () => pubsub.asyncIterator(['GAME_IN_PROGRESS_UPDATED'])
 	}
 };
 
