@@ -6,7 +6,7 @@ import handleLastFlip from './handleLastFlip';
 
 const cd = cloneDeep;
 
-const handleLetterFlip = (game: Game, timers: Map<string, NodeJS.Timeout>) => {
+const handleLetterFlip = (game: Game, timers: Map<string, NodeJS.Timeout>): Game => {
 	const randomLetter = game.letters.unflipped[Math.floor(Math.random() * game.letters.unflipped.length)];
 	const updatedLetters = {
 		unflipped: game.letters.unflipped.filter(ufl => ufl.id !== randomLetter.id),

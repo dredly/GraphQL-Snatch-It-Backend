@@ -152,3 +152,16 @@ export const testGame = {
 	players: tenPlayers.slice(0, 3).map(p => ({...cd(p), ready: true})),
 	letters: testLetters
 };
+
+export const testState3 = {
+	games: [
+		{
+			id: '1',
+			players: tenPlayers
+				.slice(0, 3).map(p => ({...cd(p), ready: true}))
+				.concat(tenPlayers[3]),
+			letters: testLetters
+		}
+	],
+	timers: new Map()
+};

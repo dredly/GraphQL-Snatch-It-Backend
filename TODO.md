@@ -20,13 +20,16 @@
             - [x] getLettersForWord
             - [x] handleLetterFlip
             - [x] snatchLetters
-        - [ ] Integrate letter flipping back into actions
+        - [x] Integrate letter flipping back into actions
+            - [x] Add back into declareReadiness action
+            - [x] Extend tests for declareReadiness action accordingly
     - [ ] Sort out resolvers
         - [ ] Get them working with actions
         - [ ] Add pubsub stuff back
+        - [ ] Add startNewGame action and resolver
     - [ ] Get server startable again
 - [ ] Add end condition
 
 ## Long Term
 
-- [ ] Use Redis cache for state
+- [ ] Use Redis cache for state?
