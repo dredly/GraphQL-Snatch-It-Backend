@@ -28,7 +28,8 @@
         - [x] Get them working with actions
         - [ ] Add createGameInProgress action and resolver
             - [x] Basic functionality
-            - [ ] Test basic functionality
+            - [x] Test basic functionality
+            - [x] Refactor action to use dependency injection
             - [ ] letter flipping
             - [ ] Test letter flipping
             - [ ] Incorporate into resolver

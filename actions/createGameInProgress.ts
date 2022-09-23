@@ -1,17 +1,21 @@
 import { Game as LobbyGame} from 'gqlobby-server/lib/types';
-import { generateLetters, allLetters } from '../letters';
-import { Game, State } from '../types';
+import { Game, Letter, State } from '../types';
 
 
 // TODO: Will have to figure out how to pass an entire lobbyGame to the resolver
-const createGameInProgressAction = (state: State, lobbyGame: LobbyGame): Game => {
+// TODO: Maybe dependency inject the letter generation function?
+const createGameInProgressAction = (
+	state: State, 
+	lobbyGame: LobbyGame, 
+	generateAllLetters: () => Letter[]
+): Game => {
 
 	//Important for the functionality of the game to set ready value of all players to false
 	const newGame: Game = {
 		id: lobbyGame.id,
 		players: lobbyGame.players.map(p => ({...p, ready: false, words: []})),
 		letters: {
-			unflipped: generateLetters(allLetters),
+			unflipped: generateAllLetters(),
 			flipped: []
 		}
 	};
