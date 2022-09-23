@@ -15,11 +15,11 @@
 - [ ] Migrate over to using gqlobby-server
     - [x] Convert actions
     - [x] Write tests for edge cases of actions
-    - [ ] Make sure helpers still work
-        - [ ] Write tests for letter helpers
+    - [x] Make sure helpers still work
+        - [x] Write tests for letter helpers
             - [x] getLettersForWord
             - [x] handleLetterFlip
-            - [ ] snatchLetters
+            - [x] snatchLetters
         - [ ] Integrate letter flipping back into actions
     - [ ] Sort out resolvers
         - [ ] Get them working with actions
