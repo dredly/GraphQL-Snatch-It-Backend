@@ -1,4 +1,5 @@
 import { Game as LobbyGame} from 'gqlobby-server/lib/types';
+import config from '../config';
 import { Game, Letter, State } from '../types';
 
 
@@ -7,10 +8,11 @@ import { Game, Letter, State } from '../types';
 const createGameInProgressAction = (
 	state: State, 
 	lobbyGame: LobbyGame, 
-	generateAllLetters: () => Letter[]
+	generateAllLetters: () => Letter[],
+	handleLetterFlip: (state: State, gameID: string) => void
 ): Game => {
 
-	//Important for the functionality of the game to set ready value of all players to false
+	// Important for the functionality of the game to set ready value of all players to false
 	const newGame: Game = {
 		id: lobbyGame.id,
 		players: lobbyGame.players.map(p => ({...p, ready: false, words: []})),
@@ -21,6 +23,12 @@ const createGameInProgressAction = (
 	};
 
 	state.games = state.games.concat(newGame);
+
+	// Start the timer for automatically flipping a new letter
+	const timeoutId = setTimeout(() => {
+		handleLetterFlip(state, newGame.id);
+	}, config.gameRules.roundTimeLimit);
+	state.timers.set(newGame.id, timeoutId);
 
 	return newGame;
 };

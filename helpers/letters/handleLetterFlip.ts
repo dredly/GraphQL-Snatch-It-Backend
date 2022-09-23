@@ -1,12 +1,16 @@
 import cloneDeep from 'lodash.clonedeep';
 
-import { Game } from '../../types';
+import { State } from '../../types';
 import config from '../../config';
 import handleLastFlip from './handleLastFlip';
 
 const cd = cloneDeep;
 
-const handleLetterFlip = (game: Game, timers: Map<string, NodeJS.Timeout>): Game => {
+const handleLetterFlip = (state: State, gameID: string): void => {
+	const game = state.games.find(g => g.id === gameID);
+	if (!game) {
+		throw new Error('Could not find that game');
+	}
 	const randomLetter = game.letters.unflipped[Math.floor(Math.random() * game.letters.unflipped.length)];
 	const updatedLetters = {
 		unflipped: game.letters.unflipped.filter(ufl => ufl.id !== randomLetter.id),
@@ -19,28 +23,30 @@ const handleLetterFlip = (game: Game, timers: Map<string, NodeJS.Timeout>): Game
 		letters: updatedLetters
 	};
 
-	if (timers.get(game.id)) {
-		clearInterval(timers.get(game.id));
-		timers.delete(game.id);
+	// TODO: Add pubsub event here
+
+	state.games = state.games.map(g => g.id === gameID ? updatedGame : g);
+
+	if (state.timers.get(game.id)) {
+		clearInterval(state.timers.get(game.id));
+		state.timers.delete(game.id);
 		console.log('Cleared interval');
 	}
 
 	// Start the timer again
 	const timeoutId = setTimeout(() => {
 		console.log('Server automatically flipping letter');
-		handleLetterFlip(game, timers);
-		if (timers.get(game.id)) {
-			timers.delete(game.id);
+		handleLetterFlip(state, gameID);
+		if (state.timers.get(game.id)) {
+			state.timers.delete(game.id);
 		}
 	}, config.gameRules.roundTimeLimit);
-	timers.set(game.id, timeoutId);
+	state.timers.set(game.id, timeoutId);
 
 	// Check if the letter just flipped was the last one
 	if (!game.letters.unflipped.length) {
 		handleLastFlip(game);
 	}
-
-	return updatedGame;
 };
 
 export default handleLetterFlip;

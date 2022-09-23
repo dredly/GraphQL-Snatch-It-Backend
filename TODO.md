@@ -31,6 +31,8 @@
             - [x] Test basic functionality
             - [x] Refactor action to use dependency injection
             - [ ] letter flipping
+                - [x] Refactor it so that it modifies the state
+                - [x] Update declareReadiness and createGameInProgress actions accordingly
             - [ ] Test letter flipping
             - [ ] Incorporate into resolver
         - [ ] Add pubsub stuff back   

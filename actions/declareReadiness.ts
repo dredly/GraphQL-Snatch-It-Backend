@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash.clonedeep';
 import every from 'lodash.every';
 
-import { State, Game } from '../types';
+import { State } from '../types';
 
 const cd = cloneDeep;
 
@@ -9,14 +9,14 @@ const cd = cloneDeep;
 const declareReadinessAction = (
 	state: State, 
 	playerID: string, 
-	handleLetterFlip: (game: Game, timers: Map<string, NodeJS.Timeout>) => Game
+	handleLetterFlip: (state: State, gameID: string) => void
 ) => {
 	const game = state.games.find(g => g.players.map(p => p.id).includes(playerID));
 	if (!game) {
 		throw new Error('A game containing that player was not found');
 	}
 
-	const partiallyUpdatedGame = {
+	const updatedGame = {
 		...cd(game),
 		players: game.players.map(p => (
 			p.id === playerID 
@@ -25,13 +25,15 @@ const declareReadinessAction = (
 		))
 	};
 
-	// Flip over a letter if all the players are ready
-	const updatedGame = every(partiallyUpdatedGame.players.map(p => p.ready))
-		? handleLetterFlip(partiallyUpdatedGame, state.timers)
-		: partiallyUpdatedGame;
-
 	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);
 
+	// Flip over a letter if all the players are ready
+	if (every(updatedGame.players.map(p => p.ready))) {
+		handleLetterFlip(state, game.id);
+	}
+
+	// This will return the game before a letter has been flipped, 
+	// but should be OK as a pubsub with the flipped letter result will be sent out separately
 	return updatedGame;
 };
 
