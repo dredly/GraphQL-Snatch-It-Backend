@@ -1,4 +1,8 @@
-import { State, Game, Player, Word } from '../types';
+import cloneDeep from 'lodash.clonedeep';
+
+const cd = cloneDeep;
+
+import { State, Game, Player, Word, Letter } from '../types';
 
 const generatePlayers = (numPlayers: number): Player[] => {
 	return Array.from({length: numPlayers}).map((_, idx) => {
@@ -116,4 +120,35 @@ export const testState2: State = {
 		}
 	],
 	timers: new Map()
+};
+
+export const testLetterPool: Letter[] = [
+	{id: '1', value: 'A'},
+	{id: '2', value: 'B'},
+	{id: '3', value: 'C'},
+	{id: '4', value: 'D'},
+	{id: '5', value: 'E'},
+	{id: '6', value: 'F'},
+	{id: '7', value: 'F'},
+	{id: '8', value: 'R'},
+	{id: '9', value: 'I'}
+];
+
+const testLetters = {
+	flipped: [
+		{id: '1', value: 'A'},
+		{id: '2', value: 'B'},
+		{id: '3', value: 'C'},
+		{id: '4', value: 'D'},
+	],
+	unflipped: [
+		{id: '5', value: 'E'},
+		{id: '6', value: 'F'},
+	]
+};
+
+export const testGame = {
+	id: '1',
+	players: tenPlayers.slice(0, 3).map(p => ({...cd(p), ready: true})),
+	letters: testLetters
 };

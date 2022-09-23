@@ -7,7 +7,7 @@ const getLettersForWord = (word: string, letterPool: Letter[]) => {
 	for (const char of wordCharArray) {
 		const letter = availableLetters.find(lett => lett.value.toLowerCase() === char);
 		if (!letter) {
-			throw new Error('Letter not available');
+			throw new Error('Not all letters available');
 		}
 		availableLetters.splice(availableLetters.indexOf(letter), 1);
 		lettersForWord.push(letter);
