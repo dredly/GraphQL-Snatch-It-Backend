@@ -1,15 +1,33 @@
-import { Game } from '../types';
-import { state } from '../resolvers/resolvers';
-import config from '../config';
-import { pubsub } from '../resolvers/resolvers';
-import handleLastFlip from './handleLastFlip';
+import cloneDeep from 'lodash.clonedeep';
 
-const handleLetterFlip = (game: Game) => {
+import { State } from '../../types';
+import config from '../../config';
+import handleLastFlip from './handleLastFlip';
+import { pubsub } from '../../resolvers/resolvers';
+
+const cd = cloneDeep;
+
+const handleLetterFlip = (state: State, gameID: string): void => {
+	const game = state.games.find(g => g.id === gameID);
+	if (!game) {
+		throw new Error('Could not find that game');
+	}
 	const randomLetter = game.letters.unflipped[Math.floor(Math.random() * game.letters.unflipped.length)];
-	game.letters = {
+	const updatedLetters = {
 		unflipped: game.letters.unflipped.filter(ufl => ufl.id !== randomLetter.id),
 		flipped: game.letters.flipped.concat(randomLetter)
 	};
+
+	const updatedGame = {
+		id: game.id,
+		players: game.players.map(p => ({...cd(p), ready: false})),
+		letters: updatedLetters
+	};
+
+	state.games = state.games.map(g => g.id === gameID ? updatedGame : g);
+
+	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameUpdated: updatedGame});
+
 	if (state.timers.get(game.id)) {
 		clearInterval(state.timers.get(game.id));
 		state.timers.delete(game.id);
@@ -19,25 +37,17 @@ const handleLetterFlip = (game: Game) => {
 	// Start the timer again
 	const timeoutId = setTimeout(() => {
 		console.log('Server automatically flipping letter');
-		handleLetterFlip(game);
+		handleLetterFlip(state, gameID);
 		if (state.timers.get(game.id)) {
 			state.timers.delete(game.id);
 		}
 	}, config.gameRules.roundTimeLimit);
 	state.timers.set(game.id, timeoutId);
 
-	for (const player of game.players) {
-		player.ready = false;
-	}
-
 	// Check if the letter just flipped was the last one
 	if (!game.letters.unflipped.length) {
 		handleLastFlip(game);
 	}
-
-	pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
-		throw new Error('Something went wrong');
-	});
 };
 
 export default handleLetterFlip;

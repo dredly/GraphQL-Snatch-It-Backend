@@ -1,4 +1,4 @@
-import { Player } from '../types';
+import { Player } from '../../types';
 
 const findPlayerByWordId = (playerList: Player[], wordId: string) => {
 	// Given a word id, returns the player who owns that word

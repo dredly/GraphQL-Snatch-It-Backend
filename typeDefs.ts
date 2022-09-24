@@ -16,44 +16,45 @@ const typeDefs = gql`
     letters: [Letter!]!
   }
 
-  type Player {
+  type PlayerInGame {
     id: ID!
     name: String!
     ready: Boolean!
     words: [Word!]!
   }
 
-  type Game {
+  type GameInProgress {
     id: ID!
-    started: Boolean!
-    players: [Player!]!
+    players: [PlayerInGame!]!
     letters: Letters!
   }
   
   type Query {
-    # count queries probably just for testing
-    playerCount: Int!
-    gameCount: Int!
-    allPlayers: [Player!]!
-    allGames: [Game!]!
-    gameById(gameID: ID!): Game
+    allPlayersInGames: [PlayerInGame!]!
+    allGamesInProgress: [GameInProgress!]!
+  }
+
+  input PlayerInput {
+    id: ID!
+    name: String!
+    ready: Boolean!
+  }
+
+  input GameInput {
+    id: ID!
+    players: [PlayerInput!]!
   }
 
   type Mutation {
-    createPlayer(name: String!): Player
-    createGame(playerID: ID!): Game
-    joinGame(playerID: ID!, gameID: ID!): Game
-    startGame(gameID: ID!): Game
-    declareReadiness(playerID: ID!): Game
-    flipLetter(gameID: ID!): Game
-    writeWord(playerID: ID!, gameID: ID!, word: String!): Game
-    snatchWord(playerID: ID!, gameID: ID!, word: String!, snatchFromID: ID!): Game
+    createGameInProgress(game: GameInput): GameInProgress
+    declareReadiness(playerID: ID!): GameInProgress
+    writeWord(playerID: ID!, gameID: ID!, word: String!): GameInProgress
+    snatchWord(playerID: ID!, gameID: ID!, word: String!, snatchFromID: ID!): GameInProgress
   }
 
   type Subscription {
-    gameAdded: Game!
-    gameUpdated: Game!
-    gameStarted: Game!
+    gameInProgressStarted: GameInProgress!
+    gameInProgressUpdated: GameInProgress!
   } 
 `;
 

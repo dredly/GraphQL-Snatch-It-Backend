@@ -1,6 +1,6 @@
 const config = {
 	gameRules: {
-		roundTimeLimit: 500 // half a second
+		roundTimeLimit: 20000 // 20 seconds
 	}
 };
 

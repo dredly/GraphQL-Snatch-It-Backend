@@ -1,4 +1,4 @@
-import { Player } from '../types';
+import { Player } from '../../types';
 
 const findWordById = (playerList: Player[], wordId: string) => {
 	const allWordsInGame = playerList.map(p => p.words).reduce((a, b) => a.concat(b));

@@ -1,6 +1,6 @@
-import findWordByIdAction from '../../helpers/findWordById';
+import findWordById from '../../../helpers/finders/findWordById';
 
-import { Word, Player, Game } from '../../types';
+import { Word, Player, Game } from '../../../types';
 
 const testWord: Word = {
 	id: '1',
@@ -51,7 +51,6 @@ const testPlayer2: Player = {
 
 const testGame: Game = {
 	id: '1',
-	started: true,
 	players: [testPlayer1, testPlayer2],
 	letters: {
 		flipped: [],
@@ -60,7 +59,7 @@ const testGame: Game = {
 };
 
 test('findWordByIdAction function', () => {
-	expect(findWordByIdAction(testGame.players, '1')).toEqual(testWord);
-	expect(findWordByIdAction(testGame.players, '3')).toEqual(testWord3);
-	expect(() => findWordByIdAction(testGame.players, '4')).toThrowError();
+	expect(findWordById(testGame.players, '1')).toEqual(testWord);
+	expect(findWordById(testGame.players, '3')).toEqual(testWord3);
+	expect(() => findWordById(testGame.players, '4')).toThrowError();
 });

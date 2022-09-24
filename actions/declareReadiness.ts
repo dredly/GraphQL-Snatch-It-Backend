@@ -1,36 +1,43 @@
-import { State } from '../types';
+import cloneDeep from 'lodash.clonedeep';
+import every from 'lodash.every';
 import { pubsub } from '../resolvers/resolvers';
-import handleLetterFlip from '../helpers/handleLetterFlip';
 
-const declareReadinessAction = (state: State, playerID: string) => {
-	const player = state.players.find(
-		(p) => p.id.toString() === playerID
-	);
-	if (!player) {
-		throw new Error('Could not find player');
-	}
-	player.ready = !player.ready;
+import { State } from '../types';
 
-	const game = state.games
-		.find(g => g.players.map(p => p.id).includes(player.id));
-    
+const cd = cloneDeep;
+
+// Dependency injecting the handleLetterFlip function to make testing easier
+const declareReadinessAction = (
+	state: State, 
+	playerID: string, 
+	handleLetterFlip: (state: State, gameID: string) => void
+) => {
+	const game = state.games.find(g => g.players.map(p => p.id).includes(playerID));
 	if (!game) {
-		throw new Error('Could not find game');
+		throw new Error('A game containing that player was not found');
 	}
 
-	game.players = game.players.map(p => (
-		p.id === player.id ? player : p
-	));
+	const updatedGame = {
+		...cd(game),
+		players: game.players.map(p => (
+			p.id === playerID 
+				? { ...p, ready: !p.ready}
+				: p
+		))
+	};
 
-	// Check if players are all ready for a letter to be flipped
-	if (game.started && game.players.filter(p => p.ready).length === game.players.length) {
-		handleLetterFlip(game);
+	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);
+
+	// Flip over a letter if all the players are ready
+	if (every(updatedGame.players.map(p => p.ready))) {
+		handleLetterFlip(state, game.id);
 	}
 
-	pubsub.publish('GAME_UPDATED', {gameUpdated: game}).catch(() => {
-		throw new Error('Something went wrong');
-	});
-	return game;
+	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameUpdated: updatedGame});
+
+	// This will return the game before a letter has been flipped, 
+	// but should be OK as a pubsub with the flipped letter result will be sent out separately
+	return updatedGame;
 };
 
 export default declareReadinessAction;
