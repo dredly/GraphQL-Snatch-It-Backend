@@ -12,8 +12,32 @@
     - [x] Make sure resolver searches for words from all players in the game
     - [x] Sort out subscriptions and get working with frontend
     - [x] Refactor mutationResolvers file
+- [x] Migrate over to using gqlobby-server
+    - [x] Convert actions
+    - [x] Write tests for edge cases of actions
+    - [x] Make sure helpers still work
+        - [x] Write tests for letter helpers
+            - [x] getLettersForWord
+            - [x] handleLetterFlip
+            - [x] snatchLetters
+        - [x] Integrate letter flipping back into actions
+            - [x] Add back into declareReadiness action
+            - [x] Extend tests for declareReadiness action accordingly
+    - [x] Get server startable again
+    - [x] Sort out resolvers
+        - [x] Get them working with actions
+        - [x] Add createGameInProgress action and resolver
+            - [x] Basic functionality
+            - [x] Test basic functionality
+            - [x] Refactor action to use dependency injection
+            - [x] letter flipping
+                - [x] Refactor it so that it modifies the state
+                - [x] Update declareReadiness and createGameInProgress actions accordingly
+            - [x] Test letter flipping
+                - [x] Update handleletterFlip test
+                - [x] Update declareReadiness test
+                - [x] Update createGameInProgress test
+            - [x] Incorporate into resolver
+        - [x] Add pubsub stuff back   
 - [ ] Add end condition
-
-## Long Term
-
-- [ ] Use Redis cache for state
+- [ ] Initial deployment
