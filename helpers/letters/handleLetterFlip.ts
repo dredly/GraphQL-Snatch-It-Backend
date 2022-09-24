@@ -3,6 +3,7 @@ import cloneDeep from 'lodash.clonedeep';
 import { State } from '../../types';
 import config from '../../config';
 import handleLastFlip from './handleLastFlip';
+import { pubsub } from '../../resolvers/resolvers';
 
 const cd = cloneDeep;
 
@@ -23,9 +24,9 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 		letters: updatedLetters
 	};
 
-	// TODO: Add pubsub event here
-
 	state.games = state.games.map(g => g.id === gameID ? updatedGame : g);
+
+	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameUpdated: updatedGame});
 
 	if (state.timers.get(game.id)) {
 		clearInterval(state.timers.get(game.id));

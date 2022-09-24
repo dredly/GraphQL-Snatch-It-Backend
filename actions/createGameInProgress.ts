@@ -1,10 +1,9 @@
 import { Game as LobbyGame} from 'gqlobby-server/lib/types';
+
 import config from '../config';
 import { Game, Letter, State } from '../types';
+import { pubsub } from '../resolvers/resolvers';
 
-
-// TODO: Will have to figure out how to pass an entire lobbyGame to the resolver
-// TODO: Maybe dependency inject the letter generation function?
 const createGameInProgressAction = (
 	state: State, 
 	lobbyGame: Omit<LobbyGame, 'status'>, 
@@ -29,6 +28,8 @@ const createGameInProgressAction = (
 		handleLetterFlip(state, newGame.id);
 	}, config.gameRules.roundTimeLimit);
 	state.timers.set(newGame.id, timeoutId);
+
+	void pubsub.publish('GAME_IN_PROGRESS_STARTED', {gameStarted: newGame});
 
 	return newGame;
 };

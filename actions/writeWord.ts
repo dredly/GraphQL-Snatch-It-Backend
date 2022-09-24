@@ -3,6 +3,7 @@ import cloneDeep from 'lodash.clonedeep';
 
 import { Game, State, Word } from '../types';
 import getLettersForWord from '../helpers/letters/getLettersForWord';
+import { pubsub } from '../resolvers/resolvers';
 
 const cd = cloneDeep;
 
@@ -34,6 +35,8 @@ const writeWordAction = (state: State, playerID: string, gameID: string, word: s
 	};
 
 	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);
+
+	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameUpdated: updatedGame});
 
 	return updatedGame;
 };

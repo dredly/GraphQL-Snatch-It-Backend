@@ -5,6 +5,7 @@ import { State, Word, Game } from '../types';
 import findWordById from '../helpers/finders/findWordById';
 import findPlayerByWordId from '../helpers/finders/findPlayerByWordId';
 import snatchLetters from '../helpers/letters/snatchLetters';
+import { pubsub } from '../resolvers/resolvers';
 
 const cd = cloneDeep;
 
@@ -41,6 +42,8 @@ const snatchWordAction = (state: State, playerID: string, gameID: string, word: 
 	};
 
 	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);
+
+	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameUpdated: updatedGame});
 
 	return updatedGame;
 };

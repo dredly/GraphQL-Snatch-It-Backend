@@ -12,7 +12,7 @@
     - [x] Make sure resolver searches for words from all players in the game
     - [x] Sort out subscriptions and get working with frontend
     - [x] Refactor mutationResolvers file
-- [ ] Migrate over to using gqlobby-server
+- [x] Migrate over to using gqlobby-server
     - [x] Convert actions
     - [x] Write tests for edge cases of actions
     - [x] Make sure helpers still work
@@ -24,7 +24,7 @@
             - [x] Add back into declareReadiness action
             - [x] Extend tests for declareReadiness action accordingly
     - [x] Get server startable again
-    - [ ] Sort out resolvers
+    - [x] Sort out resolvers
         - [x] Get them working with actions
         - [x] Add createGameInProgress action and resolver
             - [x] Basic functionality
@@ -38,6 +38,6 @@
                 - [x] Update declareReadiness test
                 - [x] Update createGameInProgress test
             - [x] Incorporate into resolver
-        - [ ] Add pubsub stuff back   
+        - [x] Add pubsub stuff back   
 - [ ] Add end condition
 - [ ] Initial deployment

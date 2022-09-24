@@ -53,6 +53,7 @@ const typeDefs = gql`
   }
 
   type Subscription {
+    gameInProgressStarted: GameInProgress!
     gameInProgressUpdated: GameInProgress!
   } 
 `;
