@@ -7,7 +7,7 @@ import { Game, Letter, State } from '../types';
 // TODO: Maybe dependency inject the letter generation function?
 const createGameInProgressAction = (
 	state: State, 
-	lobbyGame: LobbyGame, 
+	lobbyGame: Omit<LobbyGame, 'status'>, 
 	generateAllLetters: () => Letter[],
 	handleLetterFlip: (state: State, gameID: string) => void
 ): Game => {

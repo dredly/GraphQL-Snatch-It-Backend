@@ -26,7 +26,7 @@
     - [x] Get server startable again
     - [ ] Sort out resolvers
         - [x] Get them working with actions
-        - [ ] Add createGameInProgress action and resolver
+        - [x] Add createGameInProgress action and resolver
             - [x] Basic functionality
             - [x] Test basic functionality
             - [x] Refactor action to use dependency injection
@@ -37,7 +37,7 @@
                 - [x] Update handleletterFlip test
                 - [x] Update declareReadiness test
                 - [x] Update createGameInProgress test
-            - [ ] Incorporate into resolver
+            - [x] Incorporate into resolver
         - [ ] Add pubsub stuff back   
 - [ ] Add end condition
 - [ ] Initial deployment
