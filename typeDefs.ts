@@ -46,7 +46,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createGameInProgress(game: GameInput): GameInProgress
+    createGameInProgress(game: GameInput!): GameInProgress
     declareReadiness(playerID: ID!): GameInProgress
     writeWord(playerID: ID!, gameID: ID!, word: String!): GameInProgress
     snatchWord(playerID: ID!, gameID: ID!, word: String!, snatchFromID: ID!): GameInProgress

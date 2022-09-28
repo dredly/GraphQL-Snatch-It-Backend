@@ -9,9 +9,11 @@ import createGameInProgressAction from '../actions/createGameInProgress';
 import { allLetters, generateLetters } from '../letters';
 
 const mutationResolvers = {
-	createGameInProgress: (_root: undefined, args: {lobbyGame: Omit<LobbyGame, 'status'>}) => (
-		createGameInProgressAction(state, args.lobbyGame, () => generateLetters(allLetters), handleLetterFlip)
-	),
+	createGameInProgress: (_root: undefined, args: {game: Omit<LobbyGame, 'status'>}) => {
+		return (
+			createGameInProgressAction(state, args.game, () => generateLetters(allLetters), handleLetterFlip)
+		);
+	},
 	declareReadiness: (_root: undefined, args: {playerID: string}) => declareReadinessAction(state, args.playerID, handleLetterFlip),
 	writeWord: (_root: undefined, args: {playerID: string, gameID: string, word: string}) => (
 		writeWordAction(state, args.playerID, args.gameID, args.word)
