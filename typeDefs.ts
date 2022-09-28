@@ -32,6 +32,7 @@ const typeDefs = gql`
   type Query {
     allPlayersInGames: [PlayerInGame!]!
     allGamesInProgress: [GameInProgress!]!
+    oneGameInProgress(gameID: ID!): GameInProgress 
   }
 
   input PlayerInput {
