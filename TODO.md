@@ -41,6 +41,8 @@
         - [x] Add pubsub stuff back   
 - [ ] Add initial end condition (just stop game when all letters are flipped)
 - [ ] Initial deployment
+    - [ ] Manual deployment with railway
+    - [ ] Create deployment pipeline
 - [ ] Add proper end condition
     - [ ] Give players chance to write final words with already flipped letters
     - [ ] Count up score and reward winner

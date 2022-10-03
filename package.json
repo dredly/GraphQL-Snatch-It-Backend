@@ -2,10 +2,11 @@
   "name": "snatch_it_backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "ts-node": "ts-node",
-    "start": "ts-node index.ts",
+    "build": "tsc",
+    "start": "node build/index.js",
     "dev": "ts-node-dev index.ts",
     "lint": "eslint --fix --ext .ts .",
     "test": "jest --verbose"
