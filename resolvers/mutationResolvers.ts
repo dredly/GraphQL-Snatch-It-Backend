@@ -8,8 +8,6 @@ import handleLetterFlip from '../helpers/letters/handleLetterFlip';
 import createGameInProgressAction from '../actions/createGameInProgress';
 import { allLetters, generateLetters } from '../letters';
 
-const useless = 'useless';
-
 const mutationResolvers = {
 	createGameInProgress: (_root: undefined, args: {game: Omit<LobbyGame, 'status'>}) => {
 		return (
