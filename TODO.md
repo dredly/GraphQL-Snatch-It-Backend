@@ -38,11 +38,11 @@
                 - [x] Update declareReadiness test
                 - [x] Update createGameInProgress test
             - [x] Incorporate into resolver
-        - [x] Add pubsub stuff back   
-- [ ] Add initial end condition (just stop game when all letters are flipped)
+        - [x] Add pubsub stuff back
 - [ ] Initial deployment
-    - [ ] Manual deployment with railway
-    - [ ] Create deployment pipeline
+    - [x] Manual deployment with railway
+    - [ ] Create deployment pipeline   
+- [ ] Add initial end condition (just stop game when all letters are flipped)
 - [ ] Add proper end condition
     - [ ] Give players chance to write final words with already flipped letters
     - [ ] Count up score and reward winner
