@@ -10,4 +10,4 @@ const DEFAULT_PORT = 4000;
 const givenPort = process.env.PORT;
 const port = givenPort ? Number(givenPort) : DEFAULT_PORT;
 
-void startLobbyServer({port, schema, lobbyOptions: {minPlayers: 1, maxPlayers: 6}});
+void startLobbyServer({port, schema, lobbyOptions: {minPlayers: 1, maxPlayers: 4}});
