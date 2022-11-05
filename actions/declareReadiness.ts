@@ -33,7 +33,7 @@ const declareReadinessAction = (
 		handleLetterFlip(state, game.id);
 	}
 
-	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameUpdated: updatedGame});
+	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: updatedGame});
 
 	// This will return the game before a letter has been flipped, 
 	// but should be OK as a pubsub with the flipped letter result will be sent out separately

@@ -26,7 +26,7 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 
 	state.games = state.games.map(g => g.id === gameID ? updatedGame : g);
 
-	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameUpdated: updatedGame});
+	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: updatedGame});
 
 	if (state.timers.get(game.id)) {
 		clearInterval(state.timers.get(game.id));

@@ -43,7 +43,7 @@ const snatchWordAction = (state: State, playerID: string, gameID: string, word: 
 
 	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);
 
-	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameUpdated: updatedGame});
+	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: updatedGame});
 
 	return updatedGame;
 };
