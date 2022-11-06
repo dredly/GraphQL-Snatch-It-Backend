@@ -12,6 +12,7 @@ const declareReadinessAction = (
 	playerID: string, 
 	handleLetterFlip: (state: State, gameID: string) => void
 ) => {
+	console.log(`Player with id ${playerID} has declared readiness to flip`);
 	const game = state.games.find(g => g.players.map(p => p.id).includes(playerID));
 	if (!game) {
 		throw new Error('A game containing that player was not found');

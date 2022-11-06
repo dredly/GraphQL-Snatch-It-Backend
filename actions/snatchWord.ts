@@ -22,7 +22,6 @@ const snatchWordAction = (state: State, playerID: string, gameID: string, word: 
 	}
 	const snatchFrom: Word = findWordById(game.players, snatchFromID);
 	const playerLosingWord = findPlayerByWordId(game.players, snatchFromID);
-	const loserRemainingWords = playerLosingWord.words.filter(w => w.id !== snatchFromID);
 	const { letters, remaining } = snatchLetters(word, game.letters.flipped, snatchFrom);
 	const newWord: Word = {
 		id: uuidv4(),
@@ -31,13 +30,9 @@ const snatchWordAction = (state: State, playerID: string, gameID: string, word: 
 
 	const updatedGame: Game = {
 		...cd(game),
-		players: game.players.map(p => (
-			p.id === playerID
-				? { ...p, words: p.words.concat(newWord)}
-				: p.id === playerLosingWord.id
-					? { ...p, words: loserRemainingWords }
-					: p
-		)),
+		players: game.players
+			.map(p => p.id === playerID ? { ...p, words: p.words.concat(newWord) } : p)
+			.map(p => p.id === playerLosingWord.id ? { ...p, words: p.words.filter(w => w.id !== snatchFromID)} : p),
 		letters: { ...game.letters, flipped: remaining }
 	};
 

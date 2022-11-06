@@ -26,8 +26,11 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 
 	state.games = state.games.map(g => g.id === gameID ? updatedGame : g);
 
-	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: updatedGame});
-
+	// Introduce slight delay to publishing the game updated so that client can handle consecutive messages
+	setTimeout(() => {
+		void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: updatedGame});
+	}, 100);
+	
 	if (state.timers.get(game.id)) {
 		clearInterval(state.timers.get(game.id));
 		state.timers.delete(game.id);

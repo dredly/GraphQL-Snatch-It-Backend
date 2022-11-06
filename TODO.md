@@ -39,9 +39,10 @@
                 - [x] Update createGameInProgress test
             - [x] Incorporate into resolver
         - [x] Add pubsub stuff back
-- [ ] Initial deployment
+- [x] Initial deployment
     - [x] Manual deployment with railway
-    - [ ] Create deployment pipeline   
+    - [x] Create deployment pipeline   
+- [x] Fix bug where players snatching their own words duplicates the word
 - [ ] Add initial end condition (just stop game when all letters are flipped)
 - [ ] Add proper end condition
     - [ ] Give players chance to write final words with already flipped letters
