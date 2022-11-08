@@ -1,4 +1,4 @@
-import getScore from '../../helpers/getScore';
+import { getScore } from '../../helpers/getScores';
 
 describe('getScore function', () => {
 	it('Returns the number of words a player has if none of them are more than 3 letter', () => {

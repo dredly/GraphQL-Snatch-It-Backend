@@ -50,6 +50,7 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 	// Check if the letter just flipped was the last one
 	if (!game.letters.unflipped.length) {
 		handleLastFlip(game);
+		state.timers.delete(game.id);
 	}
 };
 

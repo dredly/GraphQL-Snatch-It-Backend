@@ -43,10 +43,12 @@
     - [x] Manual deployment with railway
     - [x] Create deployment pipeline   
 - [x] Fix bug where players snatching their own words duplicates the word
-- [ ] Add initial end condition (just stop game when all letters are flipped)
-- [ ] Add proper end condition
-    - [ ] Give players chance to write final words with already flipped letters
-    - [ ] Count up score and reward winner
+- [ ] Add end condition
+    - [ ] Count up score
         - [x] Create a score counting function
         - [x] Test score counting function
-        - [ ] Integrate with subscribitions and resolvers
+        - [x] Create aggregate score counting and sorting function
+        - [ ] Test aggregate scores counting function
+    - [ ] Delete game when done
+    - [ ] Integrate with frontend
+- [ ] More advanced snatching word mechanic
