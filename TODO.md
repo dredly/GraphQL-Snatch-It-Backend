@@ -49,6 +49,6 @@
         - [x] Test score counting function
         - [x] Create aggregate score counting and sorting function
         - [x] Test aggregate scores counting function
-    - [ ] Delete game when done
+    - [x] Delete game when done
     - [ ] Integrate with frontend
 - [ ] More advanced snatching word mechanic
