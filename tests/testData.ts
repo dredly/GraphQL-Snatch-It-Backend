@@ -165,3 +165,82 @@ export const testState3 = {
 	],
 	timers: new Map()
 };
+
+export const threePlayersTwoWordsEach: Player[] = [
+	{
+		name: 'P1',
+		id: 'p1',
+		ready: false,
+		words: [
+			{
+				id: 'w1',
+				letters: [
+					{id: 'l1', value: 'B'},
+					{id: 'l2', value: 'E'},
+					{id: 'l3', value: 'D'},
+				]
+			},
+			{
+				id: 'w2',
+				letters: [
+					{id: 'l4', value: 'S'},
+					{id: 'l5', value: 'P'},
+					{id: 'l6', value: 'A'},
+					{id: 'l7', value: 'T'},
+				]
+			}
+		]
+	},
+	{
+		name: 'P2',
+		id: 'p2',
+		ready: false,
+		words: [
+			{
+				id: 'w3',
+				letters: [
+					{id: 'l8', value: 'T'},
+					{id: 'l9', value: 'O'},
+				]
+			},
+			{
+				id: 'w4',
+				letters: [
+					{id: 'l10', value: 'I'},
+					{id: 'l11', value: 'N'},
+				]
+			}
+		]
+	},
+	{
+		name: 'P3',
+		id: 'p3',
+		ready: false,
+		words: [
+			{
+				id: 'w5',
+				letters: [
+					{id: 'l12', value: 'S'},
+					{id: 'l13', value: 'P'},
+					{id: 'l14', value: 'I'},
+					{id: 'l15', value: 'C'},
+					{id: 'l16', value: 'E'},
+				]
+			},
+			{
+				id: 'w6',
+				letters: [
+					{id: 'l17', value: 'A'},
+					{id: 'l18', value: 'L'},
+					{id: 'l19', value: 'B'},
+					{id: 'l20', value: 'A'},
+					{id: 'l21', value: 'T'},
+					{id: 'l22', value: 'R'},
+					{id: 'l23', value: 'O'},
+					{id: 'l24', value: 'S'},
+					{id: 'l25', value: 'S'},
+				]
+			}
+		]
+	}
+];

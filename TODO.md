@@ -44,11 +44,11 @@
     - [x] Create deployment pipeline   
 - [x] Fix bug where players snatching their own words duplicates the word
 - [ ] Add end condition
-    - [ ] Count up score
+    - [x] Count up score
         - [x] Create a score counting function
         - [x] Test score counting function
         - [x] Create aggregate score counting and sorting function
-        - [ ] Test aggregate scores counting function
+        - [x] Test aggregate scores counting function
     - [ ] Delete game when done
     - [ ] Integrate with frontend
 - [ ] More advanced snatching word mechanic
