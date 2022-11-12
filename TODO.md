@@ -51,4 +51,6 @@
         - [x] Test aggregate scores counting function
     - [x] Delete game when done
     - [ ] Integrate with frontend
+        - [x] Change scores function to use player id instead of name
+        - [ ] Publish message to frontend with score summary
 - [ ] More advanced snatching word mechanic

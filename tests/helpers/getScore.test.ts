@@ -20,15 +20,15 @@ describe('getScores function', () => {
 	it('Returns the correct scores for each player, sorted from highest to lowest', () => {
 		expect(getScores(threePlayersTwoWordsEach, getScore)).toEqual([
 			{
-				name: 'P3',
+				id: 'p3',
 				score: 10
 			},
 			{
-				name: 'P1',
+				id: 'p1',
 				score: 3
 			},
 			{
-				name: 'P2',
+				id: 'p2',
 				score: 2
 			}
 		]);

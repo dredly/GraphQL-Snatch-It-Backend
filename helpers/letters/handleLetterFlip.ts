@@ -37,6 +37,13 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 		console.log('Cleared interval');
 	}
 
+	// Check if the letter just flipped was the last one
+	if (!game.letters.unflipped.length) {
+		handleLastFlip(game);
+		state.timers.delete(game.id);
+		return;
+	}
+
 	// Start the timer again
 	const timeoutId = setTimeout(() => {
 		console.log('Server automatically flipping letter');
@@ -46,12 +53,6 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 		}
 	}, config.gameRules.roundTimeLimit);
 	state.timers.set(game.id, timeoutId);
-
-	// Check if the letter just flipped was the last one
-	if (!game.letters.unflipped.length) {
-		handleLastFlip(game);
-		state.timers.delete(game.id);
-	}
 };
 
 export default handleLetterFlip;

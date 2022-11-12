@@ -16,7 +16,7 @@ export const getScore = (wordStrings: string[]): number => {
 const getScores = (players: Player[], scoreFunc: (wordString: string[]) => number) => {
 	return players
 		.map(p => ({
-			name: p.name, 
+			id: p.id, 
 			score: scoreFunc(p.words.map(w => getWordString(w)))
 		}))
 		.sort((a, b) => b.score - a.score);
