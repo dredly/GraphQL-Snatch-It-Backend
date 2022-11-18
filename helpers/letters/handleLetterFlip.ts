@@ -26,12 +26,22 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 
 	state.games = state.games.map(g => g.id === gameID ? updatedGame : g);
 
-	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameUpdated: updatedGame});
-
+	// Introduce slight delay to publishing the game updated so that client can handle consecutive messages
+	setTimeout(() => {
+		void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: updatedGame});
+	}, 100);
+	
 	if (state.timers.get(game.id)) {
 		clearInterval(state.timers.get(game.id));
 		state.timers.delete(game.id);
 		console.log('Cleared interval');
+	}
+
+	// Check if the letter just flipped was the last one
+	if (!game.letters.unflipped.length) {
+		handleLastFlip(game);
+		state.timers.delete(game.id);
+		return;
 	}
 
 	// Start the timer again
@@ -43,11 +53,6 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 		}
 	}, config.gameRules.roundTimeLimit);
 	state.timers.set(game.id, timeoutId);
-
-	// Check if the letter just flipped was the last one
-	if (!game.letters.unflipped.length) {
-		handleLastFlip(game);
-	}
 };
 
 export default handleLetterFlip;

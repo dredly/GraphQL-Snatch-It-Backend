@@ -29,7 +29,7 @@ const createGameInProgressAction = (
 	}, config.gameRules.roundTimeLimit);
 	state.timers.set(newGame.id, timeoutId);
 
-	void pubsub.publish('GAME_IN_PROGRESS_STARTED', {gameStarted: newGame});
+	void pubsub.publish('GAME_IN_PROGRESS_STARTED', {gameInProgressStarted: newGame});
 
 	return newGame;
 };

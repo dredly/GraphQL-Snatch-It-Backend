@@ -28,6 +28,16 @@ const typeDefs = gql`
     players: [PlayerInGame!]!
     letters: Letters!
   }
+
+  type PlayerScore {
+    id: ID!
+    score: Int!
+  }
+
+  type GameSummary {
+    id: ID!
+    scoreList: [PlayerScore!]!
+  }
   
   type Query {
     allPlayersInGames: [PlayerInGame!]!
@@ -56,6 +66,7 @@ const typeDefs = gql`
   type Subscription {
     gameInProgressStarted: GameInProgress!
     gameInProgressUpdated: GameInProgress!
+    gameInProgressEnded: GameSummary!
   } 
 `;
 

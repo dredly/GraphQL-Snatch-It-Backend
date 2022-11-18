@@ -39,13 +39,19 @@
                 - [x] Update createGameInProgress test
             - [x] Incorporate into resolver
         - [x] Add pubsub stuff back
-- [ ] Initial deployment
+- [x] Initial deployment
     - [x] Manual deployment with railway
-    - [ ] Create deployment pipeline   
-- [ ] Add initial end condition (just stop game when all letters are flipped)
-- [ ] Add proper end condition
-    - [ ] Give players chance to write final words with already flipped letters
-    - [ ] Count up score and reward winner
+    - [x] Create deployment pipeline   
+- [x] Fix bug where players snatching their own words duplicates the word
+- [x] Add end condition
+    - [x] Count up score
         - [x] Create a score counting function
         - [x] Test score counting function
-        - [ ] Integrate with subscribitions and resolvers
+        - [x] Create aggregate score counting and sorting function
+        - [x] Test aggregate scores counting function
+    - [x] Delete game when done
+    - [x] Integrate with frontend
+        - [x] Change scores function to use player id instead of name
+        - [x] Publish message to frontend with score summary
+        - [x] Delete lobby game instance too
+- [ ] More advanced snatching word mechanic
