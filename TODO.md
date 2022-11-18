@@ -43,14 +43,15 @@
     - [x] Manual deployment with railway
     - [x] Create deployment pipeline   
 - [x] Fix bug where players snatching their own words duplicates the word
-- [ ] Add end condition
+- [x] Add end condition
     - [x] Count up score
         - [x] Create a score counting function
         - [x] Test score counting function
         - [x] Create aggregate score counting and sorting function
         - [x] Test aggregate scores counting function
     - [x] Delete game when done
-    - [ ] Integrate with frontend
+    - [x] Integrate with frontend
         - [x] Change scores function to use player id instead of name
-        - [ ] Publish message to frontend with score summary
+        - [x] Publish message to frontend with score summary
+        - [x] Delete lobby game instance too
 - [ ] More advanced snatching word mechanic
