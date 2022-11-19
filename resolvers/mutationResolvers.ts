@@ -6,12 +6,12 @@ import writeWordAction from '../actions/writeWord';
 import snatchWordAction from '../actions/snatchWord';
 import handleLetterFlip from '../helpers/letters/handleLetterFlip';
 import createGameInProgressAction from '../actions/createGameInProgress';
-import { lessLetters, generateLetters } from '../letters';
+import { allLetters, generateLetters } from '../letters';
 
 const mutationResolvers = {
 	createGameInProgress: (_root: undefined, args: {game: Omit<LobbyGame, 'status'>}) => {
 		return (
-			createGameInProgressAction(state, args.game, () => generateLetters(lessLetters), handleLetterFlip)
+			createGameInProgressAction(state, args.game, () => generateLetters(allLetters), handleLetterFlip)
 		);
 	},
 	declareReadiness: (_root: undefined, args: {playerID: string}) => declareReadinessAction(state, args.playerID, handleLetterFlip),

@@ -30,6 +30,19 @@ describe('snatchWordAction', () => {
 		);
 	});
 
+	it('Allows a player to snatch a word which has already been snatched', () => {
+		const state = cd(testState2);
+		snatchWordAction(state, '0', '1', 'spat', '2');
+		const afterSecondSnatch = snatchWordAction(state, '1', '1', 'pathos', '2');
+		expect(afterSecondSnatch.players[0].words).toHaveLength(1);
+		expect(afterSecondSnatch.players[1].words).toHaveLength(1);
+		expect(afterSecondSnatch.letters.flipped).toHaveLength(1);
+
+		expect(state.games).toEqual(
+			cd(testState2).games.map(g => g.id === afterSecondSnatch.id ? afterSecondSnatch : g)
+		);
+	});
+
 	it('Throws an error if called with invalid playerID or gameID', () => {
 		expect(() => snatchWordAction(cd(testState2), '2', '100', 'path', '2')).toThrowError(
 			'Could not find game'

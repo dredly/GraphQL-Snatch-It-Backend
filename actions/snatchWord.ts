@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash.clonedeep';
 
 import { State, Word, Game } from '../types';
@@ -24,15 +23,15 @@ const snatchWordAction = (state: State, playerID: string, gameID: string, word: 
 	const playerLosingWord = findPlayerByWordId(game.players, snatchFromID);
 	const { letters, remaining } = snatchLetters(word, game.letters.flipped, snatchFrom);
 	const newWord: Word = {
-		id: uuidv4(),
+		id: snatchFrom.id,
 		letters
 	};
 
 	const updatedGame: Game = {
 		...cd(game),
 		players: game.players
-			.map(p => p.id === playerID ? { ...p, words: p.words.concat(newWord) } : p)
-			.map(p => p.id === playerLosingWord.id ? { ...p, words: p.words.filter(w => w.id !== snatchFromID)} : p),
+			.map(p => p.id === playerLosingWord.id ? { ...p, words: p.words.filter(w => w.id !== snatchFromID)} : p)
+			.map(p => p.id === playerID ? { ...p, words: p.words.concat(newWord) } : p),
 		letters: { ...game.letters, flipped: remaining }
 	};
 
