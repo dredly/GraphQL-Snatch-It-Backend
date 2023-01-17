@@ -18,11 +18,11 @@ const generatePlayers = (numPlayers: number): Player[] => {
 const tenPlayers = generatePlayers(10);
 
 const testLetterArray: Letter[] = [
-	{id: '1', value: 'B', rotation: 0},
-	{id: '2', value: 'A', rotation: 0},
-	{id: '3', value: 'S', rotation: 0},
-	{id: '4', value: 'T', rotation: 0},
-	{id: '5', value: 'E', rotation: 0},
+	{id: '1', value: 'B', rotation: 0.3},
+	{id: '2', value: 'A', rotation: 0.6},
+	{id: '3', value: 'S', rotation: 0.1},
+	{id: '4', value: 'T', rotation: 0.9},
+	{id: '5', value: 'E', rotation: 0.5},
 ];
 
 const testGame1: Game = {
