@@ -19,6 +19,14 @@ describe('writeWordAction', () => {
 		);
 	});
 
+	it('Sets rotations to 0 for all letters when a word is written', () => {
+		const state = cd(testState1);
+		const updatedGame = writeWordAction(state, '4', '2', 'tab');
+		const writtenWord = updatedGame.players[1].words[0];
+		const writtenWordRotations = writtenWord.letters.map(lett => lett.rotation);
+		expect(writtenWordRotations).toEqual([0, 0, 0]);
+	});
+
 	it('Throws an error when given an invalid gameID or playerID', () => {
 		expect(() => writeWordAction(cd(testState1), '4', 'falsy', 'bat')).toThrowError(
 			'Could not find game'

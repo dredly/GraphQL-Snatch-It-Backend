@@ -5,9 +5,9 @@ import { testLetterPool } from '../../testData';
 const snatchFromWord: Word = {
 	id: '1',
 	letters: [
-		{id: '10', value: 'P'},
-		{id: '11', value: 'I'},
-		{id: '12', value: 'T'}
+		{id: '10', value: 'P', rotation: 0},
+		{id: '11', value: 'I', rotation: 0},
+		{id: '12', value: 'T', rotation: 0}
 	]
 };
 
@@ -15,20 +15,20 @@ describe('snatchLetters function', () => {
 	it('Returns the correct letters for the word and remaining letters when called with valid input', () => {
 		expect(snatchLetters('tapir', testLetterPool, snatchFromWord)).toEqual({
 			letters: [
-				{id: '12', value: 'T'},
-				{id: '1', value: 'A'},
-				{id: '10', value: 'P'},
-				{id: '11', value: 'I'},
-				{id: '8', value: 'R'},
+				{id: '12', value: 'T', rotation: 0},
+				{id: '1', value: 'A', rotation: 0},
+				{id: '10', value: 'P', rotation: 0},
+				{id: '11', value: 'I', rotation: 0},
+				{id: '8', value: 'R', rotation: 0},
 			],
 			remaining: [
-				{id: '2', value: 'B'},
-				{id: '3', value: 'C'},
-				{id: '4', value: 'D'},
-				{id: '5', value: 'E'},
-				{id: '6', value: 'F'},
-				{id: '7', value: 'F'},
-				{id: '9', value: 'I'}
+				{id: '2', value: 'B', rotation: 0},
+				{id: '3', value: 'C', rotation: 0},
+				{id: '4', value: 'D', rotation: 0},
+				{id: '5', value: 'E', rotation: 0},
+				{id: '6', value: 'F', rotation: 0},
+				{id: '7', value: 'F', rotation: 0},
+				{id: '9', value: 'I', rotation: 0}
 			]
 		});
 	});

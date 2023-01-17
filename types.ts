@@ -4,6 +4,7 @@ import { Game as LobbyGame } from 'gqlobby-server/lib/types';
 export interface Letter {
 	id: string
 	value: string
+  rotation: number
 }
 
 export interface Letters {

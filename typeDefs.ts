@@ -4,6 +4,7 @@ const typeDefs = gql`
   type Letter {
     id: ID!
     value: String!
+    rotation: Float!
   }
 
   type Letters {
