@@ -7,7 +7,7 @@ import { pubsub } from '../resolvers/resolvers';
 
 const cd = cloneDeep;
 
-const updateFlippedPositions = (currentFlippedPositions: Map<string, number>, letters: Letter[]) => {
+export const updateFlippedPositions = (currentFlippedPositions: Map<string, number>, letters: Letter[]) => {
 	const flippedPositions = cd(currentFlippedPositions);
 	letters.forEach(lett => flippedPositions.delete(lett.id));
 	return flippedPositions;
@@ -37,7 +37,11 @@ const writeWordAction = (state: State, playerID: string, gameID: string, word: s
 				? { ...p, words: p.words.concat(newWord)}
 				: p
 		)),
-		letters: { ...game.letters, flipped: remaining, flippedPostions: updateFlippedPositions(game.letters.flippedPostions, letters) }
+		letters: { 
+			...game.letters, 
+			flipped: remaining, 
+			flippedPositions: updateFlippedPositions(game.letters.flippedPositions, letters) 
+		}
 	};
 
 	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);

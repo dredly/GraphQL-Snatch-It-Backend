@@ -11,7 +11,7 @@ export interface Letters {
   unflipped: Letter[]
   flipped: Letter[],
   // Map of format letterId: position in grid
-  flippedPostions: Map<string, number>
+  flippedPositions: Map<string, number>
 }
 
 export interface Word {

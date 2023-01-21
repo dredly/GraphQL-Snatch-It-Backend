@@ -18,7 +18,7 @@ const createGameInProgressAction = (
 		letters: {
 			unflipped: generateAllLetters(),
 			flipped: [],
-			flippedPostions: new Map()
+			flippedPositions: new Map()
 		}
 	};
 

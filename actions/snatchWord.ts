@@ -5,6 +5,7 @@ import findWordById from '../helpers/finders/findWordById';
 import findPlayerByWordId from '../helpers/finders/findPlayerByWordId';
 import snatchLetters from '../helpers/letters/snatchLetters';
 import { pubsub } from '../resolvers/resolvers';
+import { updateFlippedPositions } from './writeWord';
 
 const cd = cloneDeep;
 
@@ -32,7 +33,11 @@ const snatchWordAction = (state: State, playerID: string, gameID: string, word: 
 		players: game.players
 			.map(p => p.id === playerLosingWord.id ? { ...p, words: p.words.filter(w => w.id !== snatchFromID)} : p)
 			.map(p => p.id === playerID ? { ...p, words: p.words.concat(newWord) } : p),
-		letters: { ...game.letters, flipped: remaining }
+		letters: { 
+			...game.letters, 
+			flipped: remaining, 
+			flippedPositions: updateFlippedPositions(game.letters.flippedPositions, letters) 
+		}
 	};
 
 	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);

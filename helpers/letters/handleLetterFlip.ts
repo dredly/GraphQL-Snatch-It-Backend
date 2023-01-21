@@ -42,7 +42,7 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 	const updatedLetters = {
 		unflipped: game.letters.unflipped.filter(ufl => ufl.id !== randomLetter.id),
 		flipped: game.letters.flipped.concat(randomLetter),
-		flippedPostions: updateFlippedPositions(game.letters.flippedPostions, totalNumOfLetters, randomLetter.id)
+		flippedPositions: updateFlippedPositions(game.letters.flippedPositions, totalNumOfLetters, randomLetter.id)
 	};
 
 	const updatedGame = {
