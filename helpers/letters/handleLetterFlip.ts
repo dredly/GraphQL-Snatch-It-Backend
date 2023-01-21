@@ -5,18 +5,9 @@ import config from '../../config';
 import handleLastFlip from './handleLastFlip';
 import { pubsub } from '../../resolvers/resolvers';
 import { allLetters } from '../../letters';
+import { setDifference, selectRandomElement } from '../collectionUtils';
 
 const cd = cloneDeep;
-
-// TODO: probably move these 2 functions to utils file or something
-
-const setDifference = <T>(a: Set<T>, b: Set<T>) =>  {
-	return Array.from(a).filter(item => !b.has(item));
-};
-
-const selectRandomElement = <T>(arr: Array<T>) => {
-	return arr[Math.floor(Math.random() * arr.length)];
-};
 
 const updateFlippedPositions = (currentFlippedPositions: Map<string, number>, totalNumOfLetters: number, flippedLetterId: string) => {
 	const flippedPositions = cd(currentFlippedPositions);
