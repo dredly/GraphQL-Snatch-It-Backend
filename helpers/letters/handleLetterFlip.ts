@@ -4,18 +4,45 @@ import { State } from '../../types';
 import config from '../../config';
 import handleLastFlip from './handleLastFlip';
 import { pubsub } from '../../resolvers/resolvers';
+import { allLetters } from '../../letters';
 
 const cd = cloneDeep;
 
+// TODO: probably move these 2 functions to utils file or something
+
+const setDifference = <T>(a: Set<T>, b: Set<T>) =>  {
+	return Array.from(a).filter(item => !b.has(item));
+};
+
+const selectRandomElement = <T>(arr: Array<T>) => {
+	return arr[Math.floor(Math.random() * arr.length)];
+};
+
+const updateFlippedPositions = (currentFlippedPositions: Map<string, number>, totalNumOfLetters: number, flippedLetterId: string) => {
+	const flippedPositions = cd(currentFlippedPositions);
+
+	const availablePositions = setDifference(
+		new Set([...Array(totalNumOfLetters).keys()]), // all positions
+		new Set(flippedPositions.values())      // taken positions
+	);
+
+	flippedPositions.set(flippedLetterId, selectRandomElement(availablePositions));
+	return flippedPositions;
+};
+
 const handleLetterFlip = (state: State, gameID: string): void => {
+	const totalNumOfLetters = allLetters.length;
+
 	const game = state.games.find(g => g.id === gameID);
 	if (!game) {
 		throw new Error('Could not find that game');
 	}
 	const randomLetter = game.letters.unflipped[Math.floor(Math.random() * game.letters.unflipped.length)];
+
 	const updatedLetters = {
 		unflipped: game.letters.unflipped.filter(ufl => ufl.id !== randomLetter.id),
-		flipped: game.letters.flipped.concat(randomLetter)
+		flipped: game.letters.flipped.concat(randomLetter),
+		flippedPostions: updateFlippedPositions(game.letters.flippedPostions, totalNumOfLetters, randomLetter.id)
 	};
 
 	const updatedGame = {

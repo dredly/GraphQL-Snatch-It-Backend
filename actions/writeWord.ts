@@ -1,11 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash.clonedeep';
 
-import { Game, State, Word } from '../types';
+import { Game, State, Word, Letter } from '../types';
 import getLettersForWord from '../helpers/letters/getLettersForWord';
 import { pubsub } from '../resolvers/resolvers';
 
 const cd = cloneDeep;
+
+const updateFlippedPositions = (currentFlippedPositions: Map<string, number>, letters: Letter[]) => {
+	const flippedPositions = cd(currentFlippedPositions);
+	letters.forEach(lett => flippedPositions.delete(lett.id));
+	return flippedPositions;
+};
 
 const writeWordAction = (state: State, playerID: string, gameID: string, word: string) => {
 	const game = state.games.find(
@@ -31,7 +37,7 @@ const writeWordAction = (state: State, playerID: string, gameID: string, word: s
 				? { ...p, words: p.words.concat(newWord)}
 				: p
 		)),
-		letters: { ...game.letters, flipped: remaining }
+		letters: { ...game.letters, flipped: remaining, flippedPostions: updateFlippedPositions(game.letters.flippedPostions, letters) }
 	};
 
 	state.games = state.games.map(g => g.id === updatedGame.id ? updatedGame: g);

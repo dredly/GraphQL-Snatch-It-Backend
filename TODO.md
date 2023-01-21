@@ -54,6 +54,7 @@
         - [x] Change scores function to use player id instead of name
         - [x] Publish message to frontend with score summary
         - [x] Delete lobby game instance too
-- [ ] Keep track of letter rotation on backend
+- [x] Keep track of letter rotation on backend
+- [x] Keep track of letter position on backend
 - [ ] More advanced snatching word mechanic
 - [ ] Update gqlobby-server to use the same subscription for gameStarted, gameEnded and gameRemoved

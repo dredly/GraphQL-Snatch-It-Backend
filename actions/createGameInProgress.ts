@@ -17,7 +17,8 @@ const createGameInProgressAction = (
 		players: lobbyGame.players.map(p => ({...p, ready: false, words: []})),
 		letters: {
 			unflipped: generateAllLetters(),
-			flipped: []
+			flipped: [],
+			flippedPostions: new Map()
 		}
 	};
 
