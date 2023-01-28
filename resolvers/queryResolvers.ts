@@ -1,8 +1,9 @@
+import { gameToPublishedGame } from '../helpers/mappers';
 import { state } from './resolvers';
 
 const queryResolvers = {
 	allPlayersInGames: () => state.games.map(g => g.players),
-	allGamesInProgress: () => state.games,
+	allGamesInProgress: () => state.games.map(g => gameToPublishedGame(g)),
 	oneGameInProgress: (_root: undefined, args: {gameID: string}) => {
 		console.log('games', state.games);
 		console.log('given id', args.gameID);
@@ -11,7 +12,7 @@ const queryResolvers = {
 		if (!foundGame) {
 			throw new Error('Could not find that game');
 		}
-		return foundGame;
+		return gameToPublishedGame(foundGame);
 	}
 };
 

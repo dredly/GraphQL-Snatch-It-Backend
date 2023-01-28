@@ -3,6 +3,7 @@ import { Game as LobbyGame} from 'gqlobby-server/lib/types';
 import config from '../config';
 import { Game, Letter, State } from '../types';
 import { pubsub } from '../resolvers/resolvers';
+import { gameToPublishedGame } from '../helpers/mappers';
 
 const createGameInProgressAction = (
 	state: State, 
@@ -30,7 +31,7 @@ const createGameInProgressAction = (
 	}, config.gameRules.roundTimeLimit);
 	state.timers.set(newGame.id, timeoutId);
 
-	void pubsub.publish('GAME_IN_PROGRESS_STARTED', {gameInProgressStarted: newGame});
+	void pubsub.publish('GAME_IN_PROGRESS_STARTED', {gameInProgressStarted: gameToPublishedGame(newGame) });
 
 	return newGame;
 };

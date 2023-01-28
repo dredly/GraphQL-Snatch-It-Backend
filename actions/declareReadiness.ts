@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash.clonedeep';
 import every from 'lodash.every';
+import { gameToPublishedGame } from '../helpers/mappers';
 import { pubsub } from '../resolvers/resolvers';
 
 import { State } from '../types';
@@ -34,7 +35,7 @@ const declareReadinessAction = (
 		handleLetterFlip(state, game.id);
 	}
 
-	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: updatedGame});
+	void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: gameToPublishedGame(updatedGame)});
 
 	// This will return the game before a letter has been flipped, 
 	// but should be OK as a pubsub with the flipped letter result will be sent out separately

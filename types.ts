@@ -33,3 +33,16 @@ export interface State {
   // Timers is a map of format gameId: intervalId
   timers: Map<string, NodeJS.Timeout>
 }
+
+export interface FlippedPositionMapTuple {
+  key: string
+  value: number
+}
+
+interface PublishedLetters extends Omit<Letters, 'flippedPositions'> {
+  flippedPositions: FlippedPositionMapTuple[]
+}
+
+export interface PublishedGame extends Omit<Game, 'letters'> {
+  letters: PublishedLetters
+}

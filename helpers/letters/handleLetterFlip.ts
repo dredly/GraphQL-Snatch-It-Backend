@@ -6,6 +6,7 @@ import handleLastFlip from './handleLastFlip';
 import { pubsub } from '../../resolvers/resolvers';
 import { allLetters } from '../../letters';
 import { setDifference, selectRandomElement } from '../collectionUtils';
+import { gameToPublishedGame } from '../mappers';
 
 const cd = cloneDeep;
 
@@ -46,7 +47,7 @@ const handleLetterFlip = (state: State, gameID: string): void => {
 
 	// Introduce slight delay to publishing the game updated so that client can handle consecutive messages
 	setTimeout(() => {
-		void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: updatedGame});
+		void pubsub.publish('GAME_IN_PROGRESS_UPDATED', {gameInProgressUpdated: gameToPublishedGame(updatedGame)});
 	}, 100);
 	
 	if (state.timers.get(game.id)) {
