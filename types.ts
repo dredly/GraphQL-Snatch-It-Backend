@@ -9,7 +9,9 @@ export interface Letter {
 
 export interface Letters {
   unflipped: Letter[]
-  flipped: Letter[]
+  flipped: Letter[],
+  // Map of format letterId: position in grid
+  flippedPositions: Map<string, number>
 }
 
 export interface Word {
@@ -28,6 +30,19 @@ export interface Game extends Omit<LobbyGame, 'status'> {
 
 export interface State {
   games: Game[]
-  //Timers is a map of format gameId: intervalId
+  // Timers is a map of format gameId: intervalId
   timers: Map<string, NodeJS.Timeout>
+}
+
+export interface FlippedPositionMapTuple {
+  key: string
+  value: number
+}
+
+interface PublishedLetters extends Omit<Letters, 'flippedPositions'> {
+  flippedPositions: FlippedPositionMapTuple[]
+}
+
+export interface PublishedGame extends Omit<Game, 'letters'> {
+  letters: PublishedLetters
 }

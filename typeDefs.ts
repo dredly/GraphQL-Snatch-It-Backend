@@ -7,9 +7,15 @@ const typeDefs = gql`
     rotation: Float!
   }
 
+  type FlippedPositionMapTuple {
+    key: String!
+    value: Int!
+  }
+
   type Letters {
     unflipped: [Letter!]!
     flipped: [Letter!]!
+    flippedPositions: [FlippedPositionMapTuple!]!
   }
 
   type Word {

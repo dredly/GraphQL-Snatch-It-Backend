@@ -30,7 +30,8 @@ const testGame1: Game = {
 	players: tenPlayers.slice(0, 3),
 	letters: {
 		unflipped: [],
-		flipped: []
+		flipped: [],
+		flippedPositions: new Map()
 	}
 }; 
 
@@ -39,7 +40,14 @@ const testGame2: Game = {
 	players: tenPlayers.slice(3, 5),
 	letters: {
 		unflipped: [],
-		flipped: testLetterArray
+		flipped: testLetterArray,
+		flippedPositions: new Map([
+			['1', 1],
+			['2', 2],
+			['3', 3],
+			['4', 4],
+			['5', 5],
+		])
 	}
 }; 
 
@@ -115,7 +123,13 @@ export const testState2: State = {
 			players: threePlayersWithWords,
 			letters: {
 				unflipped: [],
-				flipped: testLetterArray2
+				flipped: testLetterArray2,
+				flippedPositions: new Map([
+					['16', 16],
+					['17', 17],
+					['18', 18],
+					['19', 19],
+				])
 			}
 		}
 	],
@@ -144,7 +158,11 @@ const testLetters: Letters = {
 	unflipped: [
 		{id: '5', value: 'E', rotation: 0},
 		{id: '6', value: 'F', rotation: 0},
-	]
+	],
+	flippedPositions: new Map([
+		['5', 5],
+		['6', 6]
+	])
 };
 
 export const testGame = {

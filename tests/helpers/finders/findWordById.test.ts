@@ -54,7 +54,8 @@ const testGame: Game = {
 	players: [testPlayer1, testPlayer2],
 	letters: {
 		flipped: [],
-		unflipped: []
+		unflipped: [],
+		flippedPositions: new Map()
 	}
 };
 
