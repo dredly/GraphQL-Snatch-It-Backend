@@ -8,8 +8,8 @@ const typeDefs = gql`
   }
 
   type FlippedPositionMapTuple {
-    key: String!
-    value: Int!
+    key: String
+    value: Int
   }
 
   type Letters {
